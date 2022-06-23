@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { useHistory } from "react-router-dom";
+
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import { useStyles } from "../ToolBar/toolbar.style";
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxPopover } from "@reach/combobox";
@@ -9,7 +11,6 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocom
 import useOnclickOutside from "react-cool-onclickoutside";
 import axios from "axios";
 import { Tooltip } from "@mui/material";
-import { getBurgerResultFromServer } from "../utils/utils";
 
 interface IToolBar {
   mapRef: any;
@@ -21,6 +22,8 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
   const classes = useStyles();
   const [dataFromApi, setDataFromApi] = useState<any>();
   const [currentLocation, setCurrentLocation] = useState<string>();
+  const history = useHistory();
+
 
   const ref = useOnclickOutside(() => {
     clearSuggestions();
@@ -53,6 +56,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
     let defaultCenter;
     if (navigator?.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
+        console.log("position", position);
         defaultCenter = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -65,12 +69,14 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
         const API = "http://localhost:4000/getAddressByCoordinate";
         await axios.get(API, { params: { lat, lng } }).then((res) => {
           if (res.data.status === "OK") {
+            console.log("res.data", res.data.results[0].formatted_address);
             setValue(res.data.results[0].formatted_address);
           }
         });
       });
       setIsLoading(false);
     }
+    console.log("defaultCenter", defaultCenter);
     return defaultCenter;
   };
 
@@ -79,14 +85,44 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
     mapRef?.current?.setZoom(15);
   }, []);
 
+  const handleOnChangeInput = async (token?: string) => {
+    const lat = mapRef.current.center.lat();
+    const lng = mapRef.current.center.lng();
+    console.log("sssssssss", mapRef.current);
+    setIsLoading(true);
+    const API = "http://localhost:4000/getBurgerPoint";
+    if (token) {
+      await axios.get(API, { params: { lat, lng, token } }).then((res) => {
+        if (res.data.status === "OK") {
+          setDataFromApi(res.data);
+          setDateToDisplay((prev: any) => {
+            return [...prev, ...res.data?.results];
+          });
+          setIsLoading(false);
+        }
+      });
+    } else {
+      await axios.get(API, { params: { lat, lng } }).then((res) => {
+        if (res.data.status === "OK") {
+          setDataFromApi(res.data);
+          setDateToDisplay(res?.data?.results);
+          setIsLoading(false);
+          console.log("dataaaaaaaaaaaaaaaaaa", res.data);
+        }
+      });
+    }
+  };
+
+  const handleFavoriteClick = () => {
+    
+  };
+
   return (
     <div className={classes.header}>
       <div
         ref={ref}
         style={{
-          position: "fixed",
-          display: "flex",
-          flex: "1",
+          position: "relative",
           margin: "5px 0 0 30px",
           right: "8vw",
           top: "12px",
@@ -106,11 +142,20 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
               const { lat, lng } = getLatLng(result?.[0]);
               panTo({ lat, lng });
               setValue(address);
+
               clearSuggestions();
             } catch (err) {
               console.warn("can't find address");
             }
           }}
+          // onChange={async (address) => {
+          //   try {
+          //     const result = await getGeocode({ address } as any);
+          //     const { lat, lng } = getLatLng(result?.[0]);
+          //     panTo({ lat, lng });
+          //     setValue(String(address));
+          //   } catch (err) {}
+          // }}
         >
           <ComboboxInput
             value={value}
@@ -118,6 +163,8 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
             onChange={(e) => {
               setValue(e.target.value);
             }}
+
+            
             disabled={!ready}
             placeholder={"Enter an address"}
           />
@@ -129,18 +176,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
               ))}
           </ComboboxPopover>
         </Combobox>
-        <div
-          hidden={Boolean(!value)}
-          onClick={() =>
-            getBurgerResultFromServer({
-              mapRef,
-              setIsLoading,
-              setDateToDisplay,
-              token: undefined,
-              setDataFromApi,
-            })
-          }
-        >
+        <div hidden={Boolean(!value)} onClick={() => handleOnChangeInput()}>
           <SearchIcon className={classes.header_searchIcon} />
         </div>
         <Tooltip title={"Find burgers in my area"}>
@@ -153,14 +189,14 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
       <div className={classes.header_nav}>
         <div className={classes.nav_item}>
           <span className={classes.nav_itemLineOne}>Hello Guest</span>
-          <span className={classes.nav_itemLineTwo}>Sign In</span>
+          <span className={classes.nav_itemLineTwo} onClick={() => {history.push("/login")}}>Sign In</span>
         </div>
         <div className={classes.nav_item}>
           <span className={classes.nav_itemLineOne}>Your</span>
           <span className={classes.nav_itemLineTwo}>Favorites</span>
         </div>
         <div className={classes.nav_itemStar}>
-          <StarBorderIcon className={classes.nav_itemStar} fontSize="medium" />
+          <StarBorderIcon onClick={handleFavoriteClick} className={classes.nav_itemStar} fontSize="medium" />
           <span className={classes.nav_itemLineTwo}>0</span>
         </div>
         <div className={classes.nav_about}>
@@ -172,3 +208,4 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
   );
 };
 export default ToolBar;
+
