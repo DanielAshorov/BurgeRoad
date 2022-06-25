@@ -3,27 +3,30 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles((theme: any) => ({
   header: {
     height: "44px",
+    width: "100%",
     display: "flex",
     alignItems: "center",
     backgroundColor: "#232021",
-    position: "sticky",
+    position: "relative",
     top: "0",
     zIndex: "100",
   },
 
   header_logo: {
     display: "flex",
-    alignItems: "center",
+    flex: "1",
     color: "#ff9f00",
-    margin: "0 5px",
+    margin: "0 15px",
   },
 
   header_logoImage: {
+    display: "flex",
     textDecoration: "none",
     border: "0",
   },
 
   header_logoTitle: {
+    display: "flex",
     margin: "0 0 0 10px",
     textDecoration: "none",
     border: "0",
@@ -39,13 +42,14 @@ export const useStyles = makeStyles((theme: any) => ({
   },
 
   header_searchInput: {
+    display: "flex",
+    flex: "1",
     height: "12px",
     padding: "16px",
-    marginLeft: "30px",
+    marginLeft: "-55px",
     border: "none",
-    minWidth: "720px",
-    width: "80%",
-    maxWidth: "5000px",
+    minWidth: "120vh",
+    maxWidth: "5000vh",
     backgroundColor: "lightgray",
   },
 
@@ -62,16 +66,19 @@ export const useStyles = makeStyles((theme: any) => ({
     backgroundColor: "#e4e2de",
     cursor: "pointer",
   },
+  
   header_locationIcon: {
     top: "3px",
     position: "relative",
-    left: "10px",
-    minHeight: "31px ",
+    left: "7px",
+    minHeight: "31px",
     color: "#fff",
     cursor: "pointer",
   },
+  
   header_nav: {
     display: "flex",
+    flex: "1",
     justifyContent: "space-evenly",
   },
 
