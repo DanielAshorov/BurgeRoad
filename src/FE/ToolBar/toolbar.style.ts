@@ -93,12 +93,14 @@ export const useStyles = makeStyles((theme: any) => ({
   nav_itemLineOne: {
     fontSize: "10px",
     marginLeft: "4px",
+    cursor: "pointer",
   },
 
   nav_itemLineTwo: {
     fontSize: "11px",
     fontWeight: "800",
     marginLeft: "5px",
+    cursor: "pointer",
   },
 
   nav_itemStar: {
@@ -107,11 +109,13 @@ export const useStyles = makeStyles((theme: any) => ({
     color: "white",
     marginRight: " 0px",
     marginLeft: "0px",
+    cursor: "pointer",
   },
 
   nav_starCount: {
     marginLeft: "10px",
     marginRight: "3px",
+    cursor: "pointer",
   },
 
   nav_about: {
@@ -120,5 +124,6 @@ export const useStyles = makeStyles((theme: any) => ({
     color: "white",
     display: "flex",
     flexDirection: "column",
+    cursor: "pointer",
   },
 }));

@@ -3,6 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import { auth } from "../../BE/Firebase";
 import { useStyles } from "../Login/Login.style";
+import { setUserToLocalStorage } from "./UserManager";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const Login = () => {
   const classes = useStyles();
@@ -10,6 +12,16 @@ const Login = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      const email = user?.email ?? "";
+      setUserToLocalStorage(email, uid);
+    } else {
+      removeUserToLocalStorage()
+    }
+  });
 
   const signIn = (e: any) => {
     e.preventDefault();
@@ -69,3 +81,7 @@ const Login = () => {
 };
 
 export default Login;
+
+function removeUserToLocalStorage() {
+  throw new Error("Function not implemented.");
+}

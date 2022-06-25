@@ -36,14 +36,13 @@ app.get("/getBurgerPoint", (require, response) => {
   const burger = "המבורגר";
 
   let x = encodeURI(
-    `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${require.query?.lat},${require.query?.lng}&radius=1000&query=${burger}&sensor=true&key=AIzaSyBTEV1VfhX9gGqIXPWswa43WotvumwYATs`
+    `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${require.query.lat},${require.query.lng}&radius=1000&query=${burger}&sensor=true&key=AIzaSyBTEV1VfhX9gGqIXPWswa43WotvumwYATs`
   );
   if (require?.query?.token) {
     x = encodeURI(
       `https://maps.googleapis.com/maps/api/place/textsearch/json?&pagetoken=${require.query.token}&location=${require.query?.lat},${require.query?.lng}&radius=1000&query=${burger}&sensor=true&key=AIzaSyBTEV1VfhX9gGqIXPWswa43WotvumwYATs`
     );
   }
-  // let data;
   axios.get(x).then((res) => {
     response.setHeader("Access-Control-Allow-Origin", "*");
     response.setHeader("Access-Control-Allow-Methods", "*");

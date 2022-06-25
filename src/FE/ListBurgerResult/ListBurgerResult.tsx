@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useStyles } from "../SideBar/sidebar.style";
 import Card from "../Card/Card";
 import AddIcon from "@mui/icons-material/Add";
@@ -22,7 +22,7 @@ const ListBurgerResult = ({
   setDateToDisplay,
 }: IListBurgerResult) => {
   const classes = useStyles();
-
+  console.log("shahar");
   const handleOnClick = (id: any) => {
     setActiveMarker(id);
     const burgerCardClicked = dataToDisplay?.results?.find(
@@ -46,6 +46,21 @@ const ListBurgerResult = ({
     }
   };
 
+  const listOfBurger = useMemo(() => {
+    if (dataToDisplay?.results) {
+      const results = dataToDisplay?.results;
+      return results.sort((a: any, b: any) => {
+        if (isNaN(b?.opening_hours?.open_now)) {
+          return -1;
+        }
+        if (isNaN(a?.opening_hours?.open_now)) {
+          return 1;
+        }
+        return Number(b?.opening_hours?.open_now) - Number(a?.opening_hours?.open_now);
+      });
+    }
+  }, [dataToDisplay]);
+
   return (
     <div
       style={{
@@ -58,7 +73,7 @@ const ListBurgerResult = ({
         border: "0.5px solid #cfbfbf",
       }}
     >
-      {dataToDisplay?.results?.map((burger: any) => (
+      {listOfBurger?.map((burger: any) => (
         <Card key={burger.place_id} burger={burger} handleOnClick={handleOnClick} />
       ))}
       {dataToDisplay?.next_page_token && (

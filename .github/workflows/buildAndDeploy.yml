@@ -1,0 +1,25 @@
+name: build container & Deploy
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy-BE:
+    name: Build & Deploy BE
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{secrets.DOCKER_USERNAME}}
+          password: ${{secrets.DOCKER_PASSWORD}}
+          repository: netanelsh0/burger-fronted
+          dockerfile: Dockerfile-back
+          tags: latest

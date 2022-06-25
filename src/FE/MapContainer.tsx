@@ -1,21 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
 
 interface IMapContainer {
   mapRef: any;
   dataToDisplay: any;
-  setIsLoading: Function;
   activeMarker: any;
   setActiveMarker: Function;
 }
 
-const MapContainer = ({
-  mapRef,
-  dataToDisplay,
-  setIsLoading,
-  setActiveMarker,
-  activeMarker,
-}: IMapContainer) => {
+const MapContainer = ({ mapRef, dataToDisplay, setActiveMarker, activeMarker }: IMapContainer) => {
   const onMapLoad = useCallback((map: any) => {
     mapRef.current = map;
   }, []);
@@ -160,10 +153,11 @@ const MapContainer = ({
                 {activeMarker === m.place_id ? (
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                     <div>
-                      <div style={{ fontWeight: "bold" }}>{m.name}</div>
+                      <div style={{ fontWeight: "bold", fontSize: "13px" }}>{m.name}</div>
                       <div>{m.formatted_address.split(",")?.[0]}</div>
                       <div>{m.formatted_address.split(",")?.[1]}</div>
                       <div>{m.formatted_address.split(",")?.[2]}</div>
+                      <div style={{textAlign: "right"}}> ❤️ {m.rating}</div>
                     </div>
                   </InfoWindow>
                 ) : null}

@@ -10,6 +10,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 import axios from "axios";
 import { Tooltip } from "@mui/material";
 import { getBurgerResultFromServer } from "../utils/utils";
+import { useHistory } from "react-router-dom";
 
 interface IToolBar {
   mapRef: any;
@@ -21,6 +22,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
   const classes = useStyles();
   const [dataFromApi, setDataFromApi] = useState<any>();
   const [currentLocation, setCurrentLocation] = useState<string>();
+  const history = useHistory();
 
   const ref = useOnclickOutside(() => {
     clearSuggestions();
@@ -53,6 +55,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
     let defaultCenter;
     if (navigator?.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
+        console.log("position", position);
         defaultCenter = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -65,12 +68,14 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
         const API = "http://localhost:4000/getAddressByCoordinate";
         await axios.get(API, { params: { lat, lng } }).then((res) => {
           if (res.data.status === "OK") {
+            console.log("res.data", res.data.results[0].formatted_address);
             setValue(res.data.results[0].formatted_address);
           }
         });
       });
       setIsLoading(false);
     }
+    console.log("defaultCenter", defaultCenter);
     return defaultCenter;
   };
 
@@ -78,6 +83,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
     mapRef?.current?.panTo({ lat, lng });
     mapRef?.current?.setZoom(15);
   }, []);
+
 
   return (
     <div className={classes.header}>
@@ -153,8 +159,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
       <div className={classes.header_nav}>
         <div className={classes.nav_item}>
           <span className={classes.nav_itemLineOne}>Hello Guest</span>
-          <span className={classes.nav_itemLineTwo}>Sign In</span>
-        </div>
+          <span className={classes.nav_itemLineTwo} onClick={() => {history.push("/login")}}>Sign In</span>        </div>
         <div className={classes.nav_item}>
           <span className={classes.nav_itemLineOne}>Your</span>
           <span className={classes.nav_itemLineTwo}>Favorites</span>

@@ -21,6 +21,8 @@ export const getModalStyle = () => {
 const LoadingIndicator = ({ isLoading }: ILoadingIndicator) => {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
+  console.log("Nati");
+  console.log("Daniel");
 
   const body = (
     <div style={modalStyle} className={classes.paper}>

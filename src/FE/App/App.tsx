@@ -27,7 +27,6 @@ const App = () => {
             <MapContainer
               mapRef={mapRef}
               dataToDisplay={dataToDisplay}
-              setIsLoading={setIsLoading}
               setActiveMarker={setActiveMarker}
               activeMarker={activeMarker}
             />
