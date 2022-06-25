@@ -33,8 +33,8 @@ const MapContainer = ({
   const getDefaultCenter = useMemo(() => {
     if (dataToDisplay) {
       defaultCenter = {
-        lat: dataToDisplay?.results?.[0].geometry.location.lat,
-        lng: dataToDisplay?.results?.[0].geometry.location.lng,
+        lat: dataToDisplay?.[0].geometry.location.lat,
+        lng: dataToDisplay?.[0].geometry.location.lng,
       };
     }
     return defaultCenter;
@@ -150,14 +150,14 @@ const MapContainer = ({
       >
         {" "}
         {dataToDisplay &&
-          dataToDisplay?.results?.map((m: any) => {
+          dataToDisplay?.map((m: any) => {
             return (
               <Marker
                 key={m.place_id}
                 position={{ lat: m.geometry.location?.lat, lng: m.geometry.location?.lng }}
                 onClick={() => handleActiveMarker(m.place_id)}
               >
-                {activeMarker === m.place_id ? (
+                {activeMarker === m.place_id && (
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                     <div>
                       <div style={{ fontWeight: "bold" }}>{m.name}</div>
@@ -166,7 +166,7 @@ const MapContainer = ({
                       <div>{m.formatted_address.split(",")?.[2]}</div>
                     </div>
                   </InfoWindow>
-                ) : null}
+                )}
               </Marker>
             );
           })}

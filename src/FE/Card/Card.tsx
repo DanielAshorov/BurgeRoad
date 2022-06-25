@@ -1,31 +1,28 @@
 import React from "react";
 import { useStyles } from "./Card.style";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 interface ICard {
   burger: any;
   handleOnClick: Function;
 }
-    //<StarBorderIcon className={classes.starBorderIcon} thickness={2} size={"10rem"} />
 
 const Card = ({ burger, handleOnClick }: ICard) => {
   const classes = useStyles();
   return (
     <div
-      style={{ padding: "1vh", position: "relative", cursor: "pointer", border: "0.1px solid lightgray" }}
-      onClick={() => handleOnClick(burger.place_id)} 
+      style={{ padding: "2px 5px 10px 5px", position: "relative", cursor: "pointer" }}
+      onClick={() => handleOnClick(burger.place_id)}
     >
       <p
         style={{
           display: "block",
-          textAlign: "right",
-          fontSize: "14px",
-          fontWeight: "bold",
+          textAlign: "center",
+          fontSize: "16px",
           direction: "rtl",
           color: "black",
+          border: "solid 0.1px lightgray",
           marginBottom: "0px",
-          marginRight: "7vh",
-        }} 
+        }}
         key={burger?.name}
       >
         {burger?.name}
@@ -33,14 +30,12 @@ const Card = ({ burger, handleOnClick }: ICard) => {
       <p
         style={{
           display: "block",
-          fontSize: "12px",
-          textAlign: "right",
+          textAlign: "center",
           direction: "rtl",
           color: "gray",
+          border: "solid 0.1px lightgray",
           marginBottom: "10px",
-          marginRight: "7vh",
         }}
-
         key={burger?.formatted_address}
       >
         {burger?.formatted_address}

@@ -19,7 +19,7 @@ export const useStyles = makeStyles((theme: any) => ({
     alignItems: "center",
     color: "#ff9f00",
     margin: "17.8px 53px",
-    marginTop: "50px",
+    marginTop: "20px",
     position: "absolute",
   },
 
@@ -29,12 +29,11 @@ export const useStyles = makeStyles((theme: any) => ({
     textAlign: "center",
     width: "300px",
     height: "fit-content",
-    marginTop: "50px",
-    marginBottom: "50px",
+    marginTop: "20px",
   },
 
   login__container: {
-    width: "50vh",
+    width: "300px",
     height: "fit-content",
     display: "flex",
     flexDirection: "column",
@@ -70,8 +69,8 @@ export const useStyles = makeStyles((theme: any) => ({
     width: "100%",
     height: "30px",
     border: "1px solid",
-    marginTop: "40px",
-    marginBottom: "30px",
+    marginTop: "30px",
+    marginBottom: "20px",
     borderColor: "#a88734 #9c7e31 #846a29",
   },
 
@@ -80,7 +79,7 @@ export const useStyles = makeStyles((theme: any) => ({
     width: "100%",
     height: "30px",
     border: "1px solid",
-    marginTop: "15px",
+    marginTop: "5px",
     borderColor: "darkgray",
   },
 }));
