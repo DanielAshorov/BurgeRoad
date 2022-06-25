@@ -9,6 +9,7 @@ interface ISideBar {
   dataToDisplay: any;
   setIsLoading: Function;
   setActiveMarker: Function;
+  handleToGetMoreResult?: Function;
 }
 const SideBar = ({
   mapRef,
@@ -30,6 +31,8 @@ const SideBar = ({
         setActiveMarker={setActiveMarker}
         mapRef={mapRef}
         dataToDisplay={dataToDisplay}
+        setIsLoading={setIsLoading}
+        setDateToDisplay={setDataToDisplay}
       />
     </div>
   );
