@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { useHistory } from "react-router-dom";
+
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import { useStyles } from "../ToolBar/toolbar.style";
 import { Combobox, ComboboxInput, ComboboxOption, ComboboxPopover } from "@reach/combobox";
@@ -90,9 +92,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
       <div
         ref={ref}
         style={{
-          position: "fixed",
-          display: "flex",
-          flex: "1",
+          position: "relative",
           margin: "5px 0 0 30px",
           right: "8vw",
           top: "12px",
@@ -112,11 +112,20 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
               const { lat, lng } = getLatLng(result?.[0]);
               panTo({ lat, lng });
               setValue(address);
+
               clearSuggestions();
             } catch (err) {
               console.warn("can't find address");
             }
           }}
+          // onChange={async (address) => {
+          //   try {
+          //     const result = await getGeocode({ address } as any);
+          //     const { lat, lng } = getLatLng(result?.[0]);
+          //     panTo({ lat, lng });
+          //     setValue(String(address));
+          //   } catch (err) {}
+          // }}
         >
           <ComboboxInput
             value={value}
@@ -124,6 +133,8 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
             onChange={(e) => {
               setValue(e.target.value);
             }}
+
+
             disabled={!ready}
             placeholder={"Enter an address"}
           />
@@ -135,18 +146,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
               ))}
           </ComboboxPopover>
         </Combobox>
-        <div
-          hidden={Boolean(!value)}
-          onClick={() =>
-            getBurgerResultFromServer({
-              mapRef,
-              setIsLoading,
-              setDateToDisplay,
-              token: undefined,
-              setDataFromApi,
-            })
-          }
-        >
+        <div hidden={Boolean(!value)} onClick={() => handleOnChangeInput()}>
           <SearchIcon className={classes.header_searchIcon} />
         </div>
         <Tooltip title={"Find burgers in my area"}>
@@ -165,7 +165,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
           <span className={classes.nav_itemLineTwo}>Favorites</span>
         </div>
         <div className={classes.nav_itemStar}>
-          <StarBorderIcon className={classes.nav_itemStar} fontSize="medium" />
+          <StarBorderIcon onClick={handleFavoriteClick} className={classes.nav_itemStar} fontSize="medium" />
           <span className={classes.nav_itemLineTwo}>0</span>
         </div>
         <div className={classes.nav_about}>

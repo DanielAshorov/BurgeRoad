@@ -21,4 +21,4 @@ function getUserFromLocalStorage(): Record<string, string> | null {
 
 
 
-export {setUserToLocalStorage, getUserFromLocalStorage} 
+export {setUserToLocalStorage, getUserFromLocalStorage}
