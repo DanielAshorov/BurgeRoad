@@ -4,6 +4,7 @@ import SideBar from "../SideBar/SideBar";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import Login from "../Login/Login";
 import "../../index.css";
+import { FavoritesContextProvider } from '../context/FavContext';
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ToolBar from "../ToolBar/ToolBar";
@@ -28,25 +29,32 @@ const App = () => {
           <div className={dataToDisplay ? classes.grid : ""}>
             <MapContainer
               mapRef={mapRef}
-              dataToDisplay={dataToDisplay}
-              setActiveMarker={setActiveMarker}
-              activeMarker={activeMarker}
-            />
-            <SideBar
-              mapRef={mapRef}
-              dataToDisplay={dataToDisplay}
-              setDataToDisplay={setDataToDisplay}
+              setDateToDisplay={setDataToDisplay}
               setIsLoading={setIsLoading}
-              setActiveMarker={setActiveMarker}
             />
-            <LoadingIndicator isLoading={isLoading} />
-          </div>
-        </Route>
-        <Route path="/login" component={Login} exact>
-          <Login />
-        </Route>
-      </Switch>
-    </Router>
+            <div id="grid">
+              <MapContainer
+                mapRef={mapRef}
+                dataToDisplay={dataToDisplay}
+                setActiveMarker={setActiveMarker}
+                activeMarker={activeMarker}
+              />
+              <SideBar
+                mapRef={mapRef}
+                dataToDisplay={dataToDisplay}
+                setDataToDisplay={setDataToDisplay}
+                setIsLoading={setIsLoading}
+                setActiveMarker={setActiveMarker}
+              />
+              <LoadingIndicator isLoading={isLoading} />
+            </div>
+          </Route>
+          <Route path="/login" component={Login} exact>
+            <Login />
+          </Route>
+        </Switch>
+      </Router>
+    </FavoritesContextProvider>
   );
 };
 
