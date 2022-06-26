@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { useStyles } from "./sidebar.style";
-import SearchBurger from "../SearchBurger";
 import ListBurgerResult from "../ListBurgerResult/ListBurgerResult";
 
 interface ISideBar {
@@ -22,11 +21,6 @@ const SideBar = ({
 
   return (
     <div style={{ position: "absolute" }}>
-      <SearchBurger
-        mapRef={mapRef}
-        setDateToDisplay={setDataToDisplay}
-        setIsLoading={setIsLoading}
-      />
       <ListBurgerResult
         setActiveMarker={setActiveMarker}
         mapRef={mapRef}

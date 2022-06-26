@@ -14,7 +14,7 @@ const MapContainer = ({ mapRef, dataToDisplay, setActiveMarker, activeMarker }: 
   }, []);
 
   const mapStyles = {
-    height: "100vh",
+    height: "92.5vh",
     width: "100%",
   };
 

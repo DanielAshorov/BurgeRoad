@@ -56,6 +56,7 @@ export const useStyles = makeStyles((theme: any) => ({
   comboboxOption: {
     direction: "rtl",
     zIndex: "300",
+    backgroundColor: "#fff",
   },
 
   header_searchIcon: {
@@ -66,7 +67,7 @@ export const useStyles = makeStyles((theme: any) => ({
     backgroundColor: "#e4e2de",
     cursor: "pointer",
   },
-  
+
   header_locationIcon: {
     top: "3px",
     position: "relative",
@@ -75,7 +76,7 @@ export const useStyles = makeStyles((theme: any) => ({
     color: "#fff",
     cursor: "pointer",
   },
-  
+
   header_nav: {
     display: "flex",
     flex: "1",

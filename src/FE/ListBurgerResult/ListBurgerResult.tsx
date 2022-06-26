@@ -66,11 +66,11 @@ const ListBurgerResult = ({
       style={{
         overflow: "auto",
         position: "relative",
-        top: "95px",
-        margin: "0 0 0 5px",
-        height: "82vh",
-        width: "63.2vh",
-        border: "0.5px solid #cfbfbf",
+        margin: "0 0 0 0",
+        height: "92.5vh",
+        minWidth: "64vh",
+        maxWidth: "64vh",
+        border: "0.5px #cfbfbf",
       }}
     >
       {listOfBurger?.map((burger: any) => (
