@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -11,6 +11,7 @@ import axios from "axios";
 import { Tooltip } from "@mui/material";
 import { getBurgerResultFromServer } from "../utils/utils";
 import { useHistory } from "react-router-dom";
+import { FavoritesContext } from "../context/FavContext";
 
 interface IToolBar {
   mapRef: any;
@@ -23,6 +24,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
   const [dataFromApi, setDataFromApi] = useState<any>();
   const [currentLocation, setCurrentLocation] = useState<string>();
   const history = useHistory();
+  const favorites = useContext(FavoritesContext).favorites;
 
   const ref = useOnclickOutside(() => {
     clearSuggestions();
@@ -159,14 +161,15 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
       <div className={classes.header_nav}>
         <div className={classes.nav_item}>
           <span className={classes.nav_itemLineOne}>Hello Guest</span>
-          <span className={classes.nav_itemLineTwo} onClick={() => {history.push("/login")}}>Sign In</span>        </div>
+          <span className={classes.nav_itemLineTwo} onClick={() => {history.push("/login")}}>Sign In</span>
+        </div>
         <div className={classes.nav_item}>
           <span className={classes.nav_itemLineOne}>Your</span>
           <span className={classes.nav_itemLineTwo}>Favorites</span>
         </div>
         <div className={classes.nav_itemStar}>
           <StarBorderIcon className={classes.nav_itemStar} fontSize="medium" />
-          <span className={classes.nav_itemLineTwo}>0</span>
+          <span className={classes.nav_itemLineTwo}>{favorites.length}</span>
         </div>
         <div className={classes.nav_about}>
           <span className={classes.nav_itemLineOne}>About</span>

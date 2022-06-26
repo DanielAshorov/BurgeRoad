@@ -4,6 +4,7 @@ import SideBar from "../SideBar/SideBar";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import Login from "../Login/Login";
 import "../../index.css";
+import { FavoritesContextProvider } from '../context/FavContext';
 
 import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import ToolBar from "../ToolBar/ToolBar";
@@ -15,36 +16,38 @@ const App = () => {
   const [activeMarker, setActiveMarker] = useState<any>();
 
   return (
-    <Router>
-      <Switch>
-        <Route path="/" component={App} exact>
-          <ToolBar
-            mapRef={mapRef}
-            setDateToDisplay={setDataToDisplay}
-            setIsLoading={setIsLoading}
-          />
-          <div id="grid">
-            <MapContainer
+    <FavoritesContextProvider>
+      <Router>
+        <Switch>
+          <Route path="/" component={App} exact>
+            <ToolBar
               mapRef={mapRef}
-              dataToDisplay={dataToDisplay}
-              setActiveMarker={setActiveMarker}
-              activeMarker={activeMarker}
-            />
-            <SideBar
-              mapRef={mapRef}
-              dataToDisplay={dataToDisplay}
-              setDataToDisplay={setDataToDisplay}
+              setDateToDisplay={setDataToDisplay}
               setIsLoading={setIsLoading}
-              setActiveMarker={setActiveMarker}
             />
-            <LoadingIndicator isLoading={isLoading} />
-          </div>
-        </Route>
-        <Route path="/login" component={Login} exact>
-          <Login />
-        </Route>
-      </Switch>
-    </Router>
+            <div id="grid">
+              <MapContainer
+                mapRef={mapRef}
+                dataToDisplay={dataToDisplay}
+                setActiveMarker={setActiveMarker}
+                activeMarker={activeMarker}
+              />
+              <SideBar
+                mapRef={mapRef}
+                dataToDisplay={dataToDisplay}
+                setDataToDisplay={setDataToDisplay}
+                setIsLoading={setIsLoading}
+                setActiveMarker={setActiveMarker}
+              />
+              <LoadingIndicator isLoading={isLoading} />
+            </div>
+          </Route>
+          <Route path="/login" component={Login} exact>
+            <Login />
+          </Route>
+        </Switch>
+      </Router>
+    </FavoritesContextProvider>
   );
 };
 

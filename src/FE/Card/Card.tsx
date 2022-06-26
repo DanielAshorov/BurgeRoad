@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useStyles } from "./Card.style";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarIcon from '@mui/icons-material/Star';
 import { IconButton } from "@mui/material";
 import AlarmIcon from "@mui/icons-material/Alarm";
+import { FavoritesContext } from "../context/FavContext";
 
 interface ICard {
   burger: any;
@@ -10,7 +12,9 @@ interface ICard {
 }
 
 const Card = ({ burger, handleOnClick }: ICard) => {
+  const { favoritesIds, onFavorite, onUnFavorite } = useContext(FavoritesContext);
   const classes = useStyles();
+
 
   return (
     <div
@@ -22,12 +26,17 @@ const Card = ({ burger, handleOnClick }: ICard) => {
         cursor: "pointer",
         border: "0.1px solid lightgray",
       }}
-      onClick={() => handleOnClick(burger.place_id)}
     >
       <div style={{ marginLeft: "0.5vh", marginTop: "-0.5vh", display: "flex", flex: "1" }}>
-        <IconButton>
-          <StarBorderIcon></StarBorderIcon>
-        </IconButton>
+        {favoritesIds.includes(burger.place_id) ? (
+          <IconButton onClick={() => onUnFavorite(burger.place_id)} >
+            <StarIcon />
+          </IconButton>
+        ) : (
+          <IconButton onClick={() => onFavorite(burger)}>
+            <StarBorderIcon />
+          </IconButton>
+        )}
       </div>
       <div>
         <p
