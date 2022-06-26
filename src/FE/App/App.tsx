@@ -5,14 +5,16 @@ import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import Login from "../Login/Login";
 import "../../index.css";
 
-import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ToolBar from "../ToolBar/ToolBar";
+import { useStyles } from "./app.style";
 
 const App = () => {
   const mapRef = useRef(null);
   const [dataToDisplay, setDataToDisplay] = useState<any[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [activeMarker, setActiveMarker] = useState<any>();
+  const classes = useStyles();
 
   return (
     <Router>
@@ -23,7 +25,7 @@ const App = () => {
             setDateToDisplay={setDataToDisplay}
             setIsLoading={setIsLoading}
           />
-          <div id="grid">
+          <div className={dataToDisplay ? classes.grid : ""}>
             <MapContainer
               mapRef={mapRef}
               dataToDisplay={dataToDisplay}
