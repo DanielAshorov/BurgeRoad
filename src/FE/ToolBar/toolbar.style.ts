@@ -46,7 +46,7 @@ export const useStyles = makeStyles((theme: any) => ({
     flex: "1",
     height: "12px",
     padding: "16px",
-    marginLeft: "-55px",
+    marginLeft: "-2vh",
     border: "none",
     minWidth: "120vh",
     maxWidth: "5000vh",
@@ -56,7 +56,7 @@ export const useStyles = makeStyles((theme: any) => ({
   comboboxOption: {
     direction: "rtl",
     zIndex: "300",
-    backgroundColor: "#fff",
+    padding: "1.5vh",
   },
 
   header_searchIcon: {

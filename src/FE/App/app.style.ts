@@ -7,4 +7,9 @@ export const useStyles = makeStyles((theme: any) => ({
     display: "grid",
     gridTemplateColumns: "30% 70%",
   },
+  withOutListResult: {
+    height: "100%",
+    width: "100%",
+    display: "grid",
+  },
 }));

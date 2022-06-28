@@ -9,9 +9,11 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocom
 import useOnclickOutside from "react-cool-onclickoutside";
 import axios from "axios";
 import { Tooltip } from "@mui/material";
+import "@reach/combobox/styles.css";
 import { getBurgerResultFromServer } from "../utils/utils";
 import { useHistory } from "react-router-dom";
 import { FavoritesContext } from "../context/FavContext";
+import { getUserFromLocalStorage, removeUserToLocalStorage } from "../Login/UserManager";
 
 interface IToolBar {
   mapRef: any;
@@ -22,7 +24,7 @@ interface IToolBar {
 const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
   const classes = useStyles();
   const [dataFromApi, setDataFromApi] = useState<any>();
-  const [currentLocation, setCurrentLocation] = useState<string>();
+  const user = getUserFromLocalStorage();
   const history = useHistory();
   const favorites = useContext(FavoritesContext).favorites;
 
@@ -57,7 +59,6 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
     let defaultCenter;
     if (navigator?.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
-        console.log("position", position);
         defaultCenter = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -65,7 +66,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
         const lat = defaultCenter.lat;
         const lng = defaultCenter.lng;
         mapRef?.current?.panTo({ lat, lng });
-        mapRef?.current?.setZoom(15);
+        mapRef?.current?.setZoom(12);
 
         const API = "http://localhost:4000/getAddressByCoordinate";
         await axios.get(API, { params: { lat, lng } }).then((res) => {
@@ -77,6 +78,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
       });
       setIsLoading(false);
     }
+
     console.log("defaultCenter", defaultCenter);
     return defaultCenter;
   };
@@ -85,7 +87,6 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
     mapRef?.current?.panTo({ lat, lng });
     mapRef?.current?.setZoom(15);
   }, []);
-
 
   return (
     <div className={classes.header}>
@@ -160,16 +161,28 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
 
       <div className={classes.header_nav}>
         <div className={classes.nav_item}>
-          <span className={classes.nav_itemLineOne}>Hello Guest</span>
-          <span className={classes.nav_itemLineTwo} onClick={() => {history.push("/login")}}>Sign In</span>
-        </div>
-        <div className={classes.nav_item}>
-          <span className={classes.nav_itemLineOne}>Your</span>
-          <span className={classes.nav_itemLineTwo}>Favorites</span>
+          <span className={classes.nav_itemLineOne}>
+            {" "}
+            {user ? `Hello ${user?.email?.split?.("@")?.[0]}` : `Hello Guest`}
+          </span>
+          <span
+            className={classes.nav_itemLineTwo}
+            onClick={() => {
+              if (!user) {
+                history.push("/login");
+              } else {
+                removeUserToLocalStorage();
+                (window.location as any) = "http://localhost:3000";
+              }
+            }}
+          >
+            {" "}
+            {user ? `Log Out` : `Sign In`}
+          </span>{" "}
         </div>
         <div className={classes.nav_itemStar}>
           <StarBorderIcon className={classes.nav_itemStar} fontSize="medium" />
-          <span className={classes.nav_itemLineTwo}>{favorites.length}</span>
+          <span className={classes.nav_itemLineTwo}>{favorites.length}</span>{" "}
         </div>
         <div className={classes.nav_about}>
           <span className={classes.nav_itemLineOne}>About</span>

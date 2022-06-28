@@ -22,7 +22,6 @@ const ListBurgerResult = ({
   setDateToDisplay,
 }: IListBurgerResult) => {
   const classes = useStyles();
-  console.log("shahar");
   const handleOnClick = (id: any) => {
     setActiveMarker(id);
     const burgerCardClicked = dataToDisplay?.results?.find(

@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { useStyles } from "./Card.style";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-import StarIcon from '@mui/icons-material/Star';
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import AlarmIcon from "@mui/icons-material/Alarm";
-import { FavoritesContext } from "../context/FavContext";
 import Grow from "@mui/material/Grow";
+import StarIcon from "@mui/icons-material/Star";
+import { FavoritesContext } from "../context/FavContext";
+import { getUserFromLocalStorage } from "../Login/UserManager";
 
 interface ICard {
   burger: any;
@@ -15,60 +16,11 @@ interface ICard {
 const Card = ({ burger, handleOnClick }: ICard) => {
   const { favoritesIds, onFavorite, onUnFavorite } = useContext(FavoritesContext);
   const classes = useStyles();
+  const user = getUserFromLocalStorage();
 
+  console.log("sssssssssssssss", user);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flex: "1",
-        position: "relative",
-        marginLeft: "0rem",
-        cursor: "pointer",
-        border: "0.1px solid lightgray",
-      }}
-    >
-      <div style={{ marginLeft: "0.5vh", marginTop: "-0.5vh", display: "flex", flex: "1" }}>
-        {favoritesIds.includes(burger.place_id) ? (
-          <IconButton onClick={() => onUnFavorite(burger.place_id)} >
-            <StarIcon />
-          </IconButton>
-        ) : (
-          <IconButton onClick={() => onFavorite(burger)}>
-            <StarBorderIcon />
-          </IconButton>
-        )}
-      </div>
-      <div>
-        <p
-          style={{
-            display: "block",
-            textAlign: "right",
-            fontSize: "14px",
-            fontWeight: "bold",
-            direction: "rtl",
-            color: "black",
-            margin: "1vh 7vh 2px 0",
-          }}
-          key={burger?.name}
-        >
-          {burger?.name}
-        </p>
-        <p
-          style={{
-            display: "block",
-            fontSize: "12px",
-            textAlign: "right",
-            direction: "rtl",
-            color: "gray",
-            marginBottom: "1.5vh",
-            marginRight: "7vh",
-          }}
-          key={burger?.formatted_address}
-        >
-          {burger?.formatted_address}
-        </p>
-      </div>
     <Grow in={Boolean(burger)} timeout={2500}>
       <div
         style={{
@@ -82,9 +34,27 @@ const Card = ({ burger, handleOnClick }: ICard) => {
         onClick={() => handleOnClick(burger.place_id)}
       >
         <div style={{ marginLeft: "0.5vh", marginTop: "-0.5vh", display: "flex", flex: "1" }}>
-          <IconButton>
-            <StarBorderIcon></StarBorderIcon>
-          </IconButton>
+          {favoritesIds.includes(burger.place_id) ? (
+            <Tooltip title={"Remove place to favorites list"}>
+              <IconButton onClick={(e) => onUnFavorite(e, burger.place_id)}>
+                <StarIcon />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Tooltip
+              title={
+                user
+                  ? "Add place to favorites list"
+                  : "You should to login for use favorites list feature"
+              }
+            >
+              <div style={{ display: "flex" }}>
+                <IconButton disabled={user === null} onClick={(e) => onFavorite(e, burger)}>
+                  <StarBorderIcon />
+                </IconButton>
+              </div>
+            </Tooltip>
+          )}
         </div>
         <div>
           <p
