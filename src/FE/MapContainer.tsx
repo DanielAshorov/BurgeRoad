@@ -157,7 +157,7 @@ const MapContainer = ({ mapRef, dataToDisplay, setActiveMarker, activeMarker }: 
                       <div>{m.formatted_address.split(",")?.[0]}</div>
                       <div>{m.formatted_address.split(",")?.[1]}</div>
                       <div>{m.formatted_address.split(",")?.[2]}</div>
-                      <div style={{textAlign: "right"}}> ❤️ {m.rating}</div>
+                      <div style={{ textAlign: "right" }}> ❤️ {m.rating}</div>
                     </div>
                   </InfoWindow>
                 ) : null}

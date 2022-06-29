@@ -19,6 +19,7 @@ const Card = ({ burger, handleOnClick }: ICard) => {
   const user = getUserFromLocalStorage();
 
   console.log("sssssssssssssss", user);
+  console.log("Nati");
 
   return (
     <Grow in={Boolean(burger)} timeout={2500}>
@@ -35,7 +36,7 @@ const Card = ({ burger, handleOnClick }: ICard) => {
       >
         <div style={{ marginLeft: "0.5vh", marginTop: "-0.5vh", display: "flex", flex: "1" }}>
           {favoritesIds.includes(burger.place_id) ? (
-            <Tooltip title={"Remove place to favorites list"}>
+            <Tooltip title={"Remove place from favorite list"}>
               <IconButton onClick={(e) => onUnFavorite(e, burger.place_id)}>
                 <StarIcon />
               </IconButton>
@@ -44,8 +45,8 @@ const Card = ({ burger, handleOnClick }: ICard) => {
             <Tooltip
               title={
                 user
-                  ? "Add place to favorites list"
-                  : "You should to login for use favorites list feature"
+                  ? "Add place to your favorite list"
+                  : "You need to login to use favorite list feature"
               }
             >
               <div style={{ display: "flex" }}>

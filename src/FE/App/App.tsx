@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import Login from "../Login/Login";
 import "../../index.css";
 import { FavoritesContextProvider } from "../context/FavContext";
-import { BrowserRouter, Redirect, Route, Switch, useHistory, withRouter } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useStyles } from "./app.style";
 import AppView from "../AppView";
 import { getUserFromLocalStorage } from "../Login/UserManager";

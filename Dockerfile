@@ -9,6 +9,8 @@ ADD . .
 
 RUN npm install
 
+RUN npm run build
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 3000

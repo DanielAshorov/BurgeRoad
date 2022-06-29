@@ -25,7 +25,7 @@ export const useStyles = makeStyles((theme: any) => ({
 
   login__logoTitle: {
     color: "black",
-    display:"block", 
+    display: "block",
     textAlign: "center",
     width: "300px",
     height: "fit-content",
@@ -47,7 +47,7 @@ export const useStyles = makeStyles((theme: any) => ({
   // fontWeight: "500",
   //   marginBottom: "20px",
   //},
-  
+
   //login__container>form>h5: {
   //     marginBottom: 5px;
   // },
@@ -73,6 +73,7 @@ export const useStyles = makeStyles((theme: any) => ({
     marginTop: "40px",
     marginBottom: "30px",
     borderColor: "#a88734 #9c7e31 #846a29",
+    cursor: "pointer",
   },
 
   login__registerButton: {

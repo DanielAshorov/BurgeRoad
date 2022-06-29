@@ -38,6 +38,7 @@ export const getBurgerResultFromServer = async ({
 };
 
 export const userSecurityByDate = (date: Date, hours: number) => {
+  console.log("new Date: ", new Date());
   const dateUserAfterHours = new Date(date.getTime() + hours * 60 * 60 * 1000);
   return new Date().getTime() < dateUserAfterHours.getTime();
 };

@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import { auth } from "../../BE/Firebase";
 import { useStyles } from "../Login/Login.style";
-import { setUserToLocalStorage } from "./UserManager";
+import { removeUserToLocalStorage, setUserToLocalStorage } from "./UserManager";
 import { onAuthStateChanged } from "firebase/auth";
 
 const Login = () => {
@@ -56,7 +56,7 @@ const Login = () => {
       </Link>
 
       <div className={classes.login__container}>
-        <h1>Sign-in</h1>{" "}
+        <h1 style={{ cursor: "pointer" }}>Sign-in</h1>{" "}
         <form>
           <h5>E-mail</h5>
           <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -81,7 +81,7 @@ const Login = () => {
 };
 
 export default Login;
-
-function removeUserToLocalStorage() {
-  throw new Error("Function not implemented.");
-}
+//
+// function removeUserToLocalStorage() {
+//   throw new Error("Function not implemented.");
+// }

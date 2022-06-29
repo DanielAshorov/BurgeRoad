@@ -14,6 +14,7 @@ import { getBurgerResultFromServer } from "../utils/utils";
 import { useHistory } from "react-router-dom";
 import { FavoritesContext } from "../context/FavContext";
 import { getUserFromLocalStorage, removeUserToLocalStorage } from "../Login/UserManager";
+import ListFavorites from "../ListFavorites/ListFavorites";
 
 interface IToolBar {
   mapRef: any;
@@ -27,7 +28,6 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
   const user = getUserFromLocalStorage();
   const history = useHistory();
   const favorites = useContext(FavoritesContext).favorites;
-
   const ref = useOnclickOutside(() => {
     clearSuggestions();
   });
@@ -180,10 +180,20 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
             {user ? `Log Out` : `Sign In`}
           </span>{" "}
         </div>
-        <div className={classes.nav_itemStar}>
-          <StarBorderIcon className={classes.nav_itemStar} fontSize="medium" />
-          <span className={classes.nav_itemLineTwo}>{favorites.length}</span>{" "}
-        </div>
+        {/*TODO refactor this*/}
+        {user ? (
+          <ListFavorites>
+            <div className={classes.nav_itemStar}>
+              <StarBorderIcon className={classes.nav_itemStar} fontSize="medium" />
+              <span className={classes.nav_itemLineTwo}>{favorites.length}</span>
+            </div>
+          </ListFavorites>
+        ) : (
+          <div className={classes.nav_itemStar}>
+            <StarBorderIcon className={classes.nav_itemStar} fontSize="medium" />
+            <span className={classes.nav_itemLineTwo}>{favorites.length}</span>
+          </div>
+        )}
         <div className={classes.nav_about}>
           <span className={classes.nav_itemLineOne}>About</span>
           <span className={classes.nav_itemLineTwo}>Us</span>
