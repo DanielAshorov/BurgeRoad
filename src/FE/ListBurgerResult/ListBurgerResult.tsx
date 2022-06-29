@@ -67,8 +67,8 @@ const ListBurgerResult = ({
         position: "relative",
         margin: "0 0 0 0",
         height: "92.5vh",
-        minWidth: "64vh",
-        maxWidth: "64vh",
+        minWidth: "63.2vh",
+        maxWidth: "63.2vh",
         border: "0.5px #cfbfbf",
       }}
     >
