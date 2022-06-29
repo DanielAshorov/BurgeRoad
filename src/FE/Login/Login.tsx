@@ -40,7 +40,7 @@ const Login = () => {
       .createUserWithEmailAndPassword(email, password)
       .then((auth: any) => {
         if (auth) {
-          history.push("/");
+          window.location = `/user/${auth?.user?._delegate?.uid}` as any;
         }
       })
       .catch((error: any) => alert(error.message));
