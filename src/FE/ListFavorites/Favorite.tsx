@@ -10,7 +10,7 @@ const Favorite = ({ favor }: IFavorite) => {
   return (
     <>
       <div style={{ backgroundColor: "white" }}>
-        <Card burger={favor} handleOnClick={() => alert("List")} />
+        <Card burger={favor} handleOnClick={() => alert("List")} isListFavorites={true} />
       </div>
     </>
   );

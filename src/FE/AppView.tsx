@@ -31,10 +31,16 @@ const AppView = ({
   const [isUserVerified, setIsUserVerified] = useState<boolean | undefined>(undefined);
   const handleToClickConfirm = () => {
     removeUserToLocalStorage();
-    window.location = "http://localhost:3000" as any;
+    window.location = import.meta.env.VITE_BASE_URL;
     setIsUserVerified(undefined);
   };
   console.log("isUserVerified", isUserVerified);
+  console.log(
+    ".ENV",
+    import.meta.env.VITE_URL_BACKEND,
+    import.meta.env.VITE_BASE_URL,
+    import.meta.env.VITE_ENV
+  );
   useEffect(() => {
     if (user && userSecurityByDate(new Date(user.date), 2)) {
       history.push(`/user/${user.uid}`);

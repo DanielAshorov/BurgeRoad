@@ -68,7 +68,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
         mapRef?.current?.panTo({ lat, lng });
         mapRef?.current?.setZoom(12);
 
-        const API = "http://localhost:4000/getAddressByCoordinate";
+        const API = `${import.meta.env.VITE_URL_BACKEND}/getAddressByCoordinate`;
         await axios.get(API, { params: { lat, lng } }).then((res) => {
           if (res.data.status === "OK") {
             console.log("res.data", res.data.results[0].formatted_address);
@@ -172,7 +172,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
                 history.push("/login");
               } else {
                 removeUserToLocalStorage();
-                (window.location as any) = "http://localhost:3000";
+                (window.location as any) = import.meta.env.VITE_BASE_URL;
               }
             }}
           >
@@ -195,8 +195,12 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
           </div>
         )}
         <div className={classes.nav_about}>
-          <span className={classes.nav_itemLineOne}>About</span>
-          <span className={classes.nav_itemLineTwo}>Us</span>
+          <span className={classes.nav_itemLineOne} onClick={() => history.push("/aboutUs")}>
+            About
+          </span>
+          <span className={classes.nav_itemLineTwo} onClick={() => history.push("/aboutUs")}>
+            Us
+          </span>
         </div>
       </div>
     </div>

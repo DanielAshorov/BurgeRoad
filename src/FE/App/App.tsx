@@ -7,6 +7,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useStyles } from "./app.style";
 import AppView from "../AppView";
 import { getUserFromLocalStorage } from "../Login/UserManager";
+import AboutUs from "../AboutUs/AboutUs";
 
 interface IRoutes {
   mapRef: any;
@@ -28,6 +29,7 @@ const Routes = ({
   activeMarker,
 }: IRoutes) => {
   const user = getUserFromLocalStorage();
+  console.log("this is update");
   return (
     <>
       <BrowserRouter>
@@ -44,6 +46,7 @@ const Routes = ({
             />
           </Route>
           <Route path={`/login`} component={Login} />
+          <Route path={`/aboutUS`} component={AboutUs} />
           <Route path={user ? `/user` : `/login`} component={AppView}>
             <AppView
               dataToDisplay={dataToDisplay}

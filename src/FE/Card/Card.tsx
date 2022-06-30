@@ -11,15 +11,13 @@ import { getUserFromLocalStorage } from "../Login/UserManager";
 interface ICard {
   burger: any;
   handleOnClick: Function;
+  isListFavorites?: boolean;
 }
 
-const Card = ({ burger, handleOnClick }: ICard) => {
+const Card = ({ burger, handleOnClick, isListFavorites }: ICard) => {
   const { favoritesIds, onFavorite, onUnFavorite } = useContext(FavoritesContext);
   const classes = useStyles();
   const user = getUserFromLocalStorage();
-
-  console.log("sssssssssssssss", user);
-  console.log("Nati");
 
   return (
     <Grow in={Boolean(burger)} timeout={2500}>
@@ -96,23 +94,27 @@ const Card = ({ burger, handleOnClick }: ICard) => {
           }}
           onClick={() => handleOnClick(burger.place_id)}
         >
-          <div
-            style={{
-              marginLeft: "-5.5vh",
-              marginTop: "-0.5vh",
-              display: "flex",
-              flex: "1",
-              justifyContent: "end",
-            }}
-          >
-            <IconButton>
-              <AlarmIcon
-                className={
-                  burger?.opening_hours?.open_now ? classes.greenColorClock : classes.redColorClock
-                }
-              ></AlarmIcon>
-            </IconButton>
-          </div>
+          {!isListFavorites && (
+            <div
+              style={{
+                marginLeft: "-5.5vh",
+                marginTop: "-0.5vh",
+                display: "flex",
+                flex: "1",
+                justifyContent: "end",
+              }}
+            >
+              <IconButton>
+                <AlarmIcon
+                  className={
+                    burger?.opening_hours?.open_now
+                      ? classes.greenColorClock
+                      : classes.redColorClock
+                  }
+                ></AlarmIcon>
+              </IconButton>
+            </div>
+          )}
         </div>
       </div>
     </Grow>

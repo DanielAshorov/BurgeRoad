@@ -1,5 +1,3 @@
-// import express from "express";
-// import axios from "axios";
 const express = require("express");
 const axios = require("axios");
 
@@ -50,4 +48,8 @@ app.get("/getBurgerPoint", (require, response) => {
     console.info("getBurgerPoint");
     response.send(res.data);
   });
+});
+
+app.get("/health", (require, response) => {
+  response.status(200).send("OK");
 });
