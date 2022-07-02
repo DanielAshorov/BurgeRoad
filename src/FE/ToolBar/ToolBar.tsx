@@ -3,9 +3,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
-import { useStyles } from "../ToolBar/toolbar.style";
-import { Combobox, ComboboxInput, ComboboxOption, ComboboxPopover } from "@reach/combobox";
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+import { useStyles } from "./toolbar.style";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxPopover,
+} from "@reach/combobox";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 import axios from "axios";
 import { Tooltip } from "@mui/material";
@@ -13,7 +21,10 @@ import "@reach/combobox/styles.css";
 import { getBurgerResultFromServer } from "../utils/utils";
 import { useHistory } from "react-router-dom";
 import { FavoritesContext } from "../context/FavContext";
-import { getUserFromLocalStorage, removeUserToLocalStorage } from "../Login/UserManager";
+import {
+  getUserFromLocalStorage,
+  removeUserToLocalStorage,
+} from "../Login/UserManager";
 import ListFavorites from "../ListFavorites/ListFavorites";
 
 interface IToolBar {
@@ -68,7 +79,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
         mapRef?.current?.panTo({ lat, lng });
         mapRef?.current?.setZoom(12);
 
-        const API = `${import.meta.env.VITE_URL_BACKEND}/getAddressByCoordinate`;
+        const API = `${process.env.REACT_APP_BACKEND}/getAddressByCoordinate`;
         await axios.get(API, { params: { lat, lng } }).then((res) => {
           if (res.data.status === "OK") {
             console.log("res.data", res.data.results[0].formatted_address);
@@ -103,7 +114,10 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
       ></div>
 
       <div className={classes.header_logo}>
-        <LunchDiningIcon className={classes.header_logoImage} fontSize="large" />
+        <LunchDiningIcon
+          className={classes.header_logoImage}
+          fontSize="large"
+        />
         <h2 className={classes.header_logoTitle}>BurgeRoad</h2>
       </div>
 
@@ -134,7 +148,11 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
             {" "}
             {status === "OK" &&
               data.map(({ description }, id) => (
-                <ComboboxOption className={classes.comboboxOption} key={id} value={description} />
+                <ComboboxOption
+                  className={classes.comboboxOption}
+                  key={id}
+                  value={description}
+                />
               ))}
           </ComboboxPopover>
         </Combobox>
@@ -172,7 +190,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
                 history.push("/login");
               } else {
                 removeUserToLocalStorage();
-                (window.location as any) = import.meta.env.VITE_BASE_URL;
+                (window.location as any) = process.env.REACT_APP_URL;
               }
             }}
           >
@@ -184,21 +202,35 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
         {user ? (
           <ListFavorites>
             <div className={classes.nav_itemStar}>
-              <StarBorderIcon className={classes.nav_itemStar} fontSize="medium" />
-              <span className={classes.nav_itemLineTwo}>{favorites.length}</span>
+              <StarBorderIcon
+                className={classes.nav_itemStar}
+                fontSize="medium"
+              />
+              <span className={classes.nav_itemLineTwo}>
+                {favorites.length}
+              </span>
             </div>
           </ListFavorites>
         ) : (
           <div className={classes.nav_itemStar}>
-            <StarBorderIcon className={classes.nav_itemStar} fontSize="medium" />
+            <StarBorderIcon
+              className={classes.nav_itemStar}
+              fontSize="medium"
+            />
             <span className={classes.nav_itemLineTwo}>{favorites.length}</span>
           </div>
         )}
         <div className={classes.nav_about}>
-          <span className={classes.nav_itemLineOne} onClick={() => history.push("/aboutUs")}>
+          <span
+            className={classes.nav_itemLineOne}
+            onClick={() => history.push("/aboutUs")}
+          >
             About
           </span>
-          <span className={classes.nav_itemLineTwo} onClick={() => history.push("/aboutUs")}>
+          <span
+            className={classes.nav_itemLineTwo}
+            onClick={() => history.push("/aboutUs")}
+          >
             Us
           </span>
         </div>

@@ -1,4 +1,10 @@
-import React, { createContext, ReactNode, useCallback, useEffect, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { db } from "../../BE/Firebase";
 import { getUserFromLocalStorage } from "../Login/UserManager";
 import {
@@ -16,8 +22,8 @@ import { useHistory } from "react-router-dom";
 export const FavoritesContext = createContext({
   favorites: [] as any[],
   favoritesIds: [] as string[],
-  onFavorite: (e: any, burger: any) => {},
-  onUnFavorite: (e: any, place_id: string) => {},
+  onFavorite: (e: any, burger: any) => { },
+  onUnFavorite: (e: any, place_id: string) => { },
 });
 
 interface propTypes {
@@ -31,7 +37,7 @@ export const FavoritesContextProvider = (props: propTypes) => {
   const [userLogin, setUserLogin] = useState<any>(user);
 
   useEffect(() => {
-    let unsubscribe = () => {};
+    let unsubscribe = () => { };
     console.log("userLogin", userLogin);
     if (!user) {
       if (favorites.length > 0) {
@@ -41,7 +47,10 @@ export const FavoritesContextProvider = (props: propTypes) => {
       return unsubscribe();
     }
     console.log("use id is:", user.uid);
-    const q = query(collection(db, "favorites"), where("userId", "==", user.uid));
+    const q = query(
+      collection(db, "favorites"),
+      where("userId", "==", user.uid)
+    );
     unsubscribe = onSnapshot(q, (snapshot) => {
       const favoritesIds = [] as string[];
       const favorites = snapshot?.docs?.map((doc) => {
@@ -75,7 +84,9 @@ export const FavoritesContextProvider = (props: propTypes) => {
       .catch((err) => console.log(err));
   };
   return (
-    <FavoritesContext.Provider value={{ favorites, favoritesIds, onFavorite, onUnFavorite }}>
+    <FavoritesContext.Provider
+      value={{ favorites, favoritesIds, onFavorite, onUnFavorite }}
+    >
       {props.children}
     </FavoritesContext.Provider>
   );

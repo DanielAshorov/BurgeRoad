@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import { auth } from "../../BE/Firebase";
-import { useStyles } from "../Login/Login.style";
+import { useStyles } from "./Login.style";
 import { removeUserToLocalStorage, setUserToLocalStorage } from "./UserManager";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -50,7 +50,10 @@ const Login = () => {
     <div className={classes.login}>
       <Link to="/" style={{ textDecoration: "none" }}>
         <div className={classes.login__logo}>
-          <LunchDiningIcon className={classes.login_logo_Image} fontSize="large" />
+          <LunchDiningIcon
+            className={classes.login_logo_Image}
+            fontSize="large"
+          />
           <h2 className={classes.login__logoTitle}>BurgeRoad</h2>
         </div>
       </Link>
@@ -59,18 +62,30 @@ const Login = () => {
         <h1 style={{ cursor: "pointer" }}>Sign-in</h1>{" "}
         <form>
           <h5>E-mail</h5>
-          <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <h5>Password</h5>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-          <button type="submit" className={classes.login__signInButton} onClick={signIn}>
+          <button
+            type="submit"
+            className={classes.login__signInButton}
+            onClick={signIn}
+          >
             Sign In
           </button>
         </form>
         <p>
-          By signing-in you agree to our Website Conditions of Use & Sale. Please see our Privacy
-          Notice.
+          By signing-in you agree to our Website Conditions of Use & Sale.
+          Please see our Privacy Notice.
         </p>
         <button className={classes.login__registerButton} onClick={register}>
           Create your BurgeRoad Account

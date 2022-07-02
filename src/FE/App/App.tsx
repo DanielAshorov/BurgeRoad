@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import Login from "../Login/Login";
-import "../../index.css";
+import "../../../src/index.css";
 import { FavoritesContextProvider } from "../context/FavContext";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { useStyles } from "./app.style";
@@ -29,7 +29,6 @@ const Routes = ({
   activeMarker,
 }: IRoutes) => {
   const user = getUserFromLocalStorage();
-  console.log("this is update");
   return (
     <>
       <BrowserRouter>

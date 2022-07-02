@@ -4,7 +4,10 @@ import MapContainer from "./MapContainer";
 import SideBar from "./SideBar/SideBar";
 import ToolBar from "./ToolBar/ToolBar";
 import { useHistory } from "react-router-dom";
-import { getUserFromLocalStorage, removeUserToLocalStorage } from "./Login/UserManager";
+import {
+  getUserFromLocalStorage,
+  removeUserToLocalStorage,
+} from "./Login/UserManager";
 import { userSecurityByDate } from "./utils/utils";
 import Modal from "./Modal/Modal";
 
@@ -28,18 +31,20 @@ const AppView = ({
   const classes = useStyles();
   const history = useHistory();
   const user = getUserFromLocalStorage();
-  const [isUserVerified, setIsUserVerified] = useState<boolean | undefined>(undefined);
+  const [isUserVerified, setIsUserVerified] = useState<boolean | undefined>(
+    undefined
+  );
   const handleToClickConfirm = () => {
     removeUserToLocalStorage();
-    window.location = import.meta.env.VITE_BASE_URL;
+    window.location = process.env.VITE_BASE_URL as any;
     setIsUserVerified(undefined);
   };
   console.log("isUserVerified", isUserVerified);
   console.log(
     ".ENV",
-    import.meta.env.VITE_URL_BACKEND,
-    import.meta.env.VITE_BASE_URL,
-    import.meta.env.VITE_ENV
+    process.env.VITE_URL_BACKEND,
+    process.env.VITE_BASE_URL,
+    process.env.VITE_ENV
   );
   useEffect(() => {
     if (user && userSecurityByDate(new Date(user.date), 2)) {
@@ -58,11 +63,15 @@ const AppView = ({
         <Modal
           isOpen={isUserVerified === false}
           title={"Oppppss...."}
-          subTitle={"Something went wrong because of security issues"}
+          subTitle={"You have not been active for more than two hours, so you are logged out of your account for security purposes."}
           onClickConfirm={handleToClickConfirm}
         />
       )}
-      <ToolBar mapRef={mapRef} setDateToDisplay={setDataToDisplay} setIsLoading={setIsLoading} />
+      <ToolBar
+        mapRef={mapRef}
+        setDateToDisplay={setDataToDisplay}
+        setIsLoading={setIsLoading}
+      />
       <div className={dataToDisplay ? classes.grid : classes.withOutListResult}>
         <MapContainer
           mapRef={mapRef}

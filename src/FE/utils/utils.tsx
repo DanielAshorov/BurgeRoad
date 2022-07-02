@@ -16,7 +16,7 @@ export const getBurgerResultFromServer = async ({
   const lat = mapRef.current.center.lat();
   const lng = mapRef.current.center.lng();
   setIsLoading(true);
-  const API = `${import.meta.env.VITE_URL_BACKEND}/getBurgerPoint`;
+  const API = `${process.env.REACT_APP_BACKEND}/getBurgerPoint`;
   if (token) {
     await axios.get(API, { params: { lat, lng, token } }).then((res) => {
       if (res.data.status === "OK") {

@@ -1,7 +1,7 @@
 import { CircularProgress, Modal } from "@mui/material";
 import React from "react";
 import { useStyles } from "./LoadingIndecator.style";
-import BurgerIcon from "../../../burgerIcon.svg";
+import BurgerIcon from "../../icons/burgerIcon.svg";
 
 interface ILoadingIndicator {
   isLoading: boolean;
@@ -21,12 +21,14 @@ export const getModalStyle = () => {
 const LoadingIndicator = ({ isLoading }: ILoadingIndicator) => {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
-  console.log("Nati");
-  console.log("Daniel");
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <CircularProgress className={classes.loadingCircle} thickness={2} size={"10rem"} />
+      <CircularProgress
+        className={classes.loadingCircle}
+        thickness={2}
+        size={"10rem"}
+      />
       <img src={BurgerIcon} alt="" className={classes.LogoSvg} />
     </div>
   );

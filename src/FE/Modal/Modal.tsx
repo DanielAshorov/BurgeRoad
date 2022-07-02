@@ -27,7 +27,12 @@ const Modal = ({ isOpen, title, subTitle, onClickConfirm }: IDialog) => {
   });
   return (
     <>
-      <Dialog open={isOpen} TransitionComponent={Transition} keepMounted onClose={() => null}>
+      <Dialog
+        open={isOpen}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => null}
+      >
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
           <DialogContentText>{subTitle}</DialogContentText>

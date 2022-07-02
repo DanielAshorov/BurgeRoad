@@ -8,7 +8,12 @@ interface IMapContainer {
   setActiveMarker: Function;
 }
 
-const MapContainer = ({ mapRef, dataToDisplay, setActiveMarker, activeMarker }: IMapContainer) => {
+const MapContainer = ({
+  mapRef,
+  dataToDisplay,
+  setActiveMarker,
+  activeMarker,
+}: IMapContainer) => {
   const onMapLoad = useCallback((map: any) => {
     mapRef.current = map;
   }, []);
@@ -61,8 +66,14 @@ const MapContainer = ({ mapRef, dataToDisplay, setActiveMarker, activeMarker }: 
         options={{
           styles: [
             { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-            { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
-            { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+            {
+              elementType: "labels.text.stroke",
+              stylers: [{ color: "#242f3e" }],
+            },
+            {
+              elementType: "labels.text.fill",
+              stylers: [{ color: "#746855" }],
+            },
             {
               featureType: "administrative.locality",
               elementType: "labels.text.fill",
@@ -147,13 +158,18 @@ const MapContainer = ({ mapRef, dataToDisplay, setActiveMarker, activeMarker }: 
             return (
               <Marker
                 key={m.place_id}
-                position={{ lat: m.geometry.location?.lat, lng: m.geometry.location?.lng }}
+                position={{
+                  lat: m.geometry.location?.lat,
+                  lng: m.geometry.location?.lng,
+                }}
                 onClick={() => handleActiveMarker(m.place_id)}
               >
                 {activeMarker === m.place_id ? (
                   <InfoWindow onCloseClick={() => setActiveMarker(null)}>
                     <div>
-                      <div style={{ fontWeight: "bold", fontSize: "13px" }}>{m.name}</div>
+                      <div style={{ fontWeight: "bold", fontSize: "13px" }}>
+                        {m.name}
+                      </div>
                       <div>{m.formatted_address.split(",")?.[0]}</div>
                       <div>{m.formatted_address.split(",")?.[1]}</div>
                       <div>{m.formatted_address.split(",")?.[2]}</div>

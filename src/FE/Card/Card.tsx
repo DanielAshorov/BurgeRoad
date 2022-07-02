@@ -15,7 +15,8 @@ interface ICard {
 }
 
 const Card = ({ burger, handleOnClick, isListFavorites }: ICard) => {
-  const { favoritesIds, onFavorite, onUnFavorite } = useContext(FavoritesContext);
+  const { favoritesIds, onFavorite, onUnFavorite } =
+    useContext(FavoritesContext);
   const classes = useStyles();
   const user = getUserFromLocalStorage();
 
@@ -32,7 +33,14 @@ const Card = ({ burger, handleOnClick, isListFavorites }: ICard) => {
         }}
         onClick={() => handleOnClick(burger.place_id)}
       >
-        <div style={{ marginLeft: "0.5vh", marginTop: "-0.5vh", display: "flex", flex: "1" }}>
+        <div
+          style={{
+            marginLeft: "0.5vh",
+            marginTop: "-0.5vh",
+            display: "flex",
+            flex: "1",
+          }}
+        >
           {favoritesIds.includes(burger.place_id) ? (
             <Tooltip title={"Remove place from favorite list"}>
               <IconButton onClick={(e) => onUnFavorite(e, burger.place_id)}>
@@ -48,7 +56,10 @@ const Card = ({ burger, handleOnClick, isListFavorites }: ICard) => {
               }
             >
               <div style={{ display: "flex" }}>
-                <IconButton disabled={user === null} onClick={(e) => onFavorite(e, burger)}>
+                <IconButton
+                  disabled={user === null}
+                  onClick={(e) => onFavorite(e, burger)}
+                >
                   <StarBorderIcon />
                 </IconButton>
               </div>

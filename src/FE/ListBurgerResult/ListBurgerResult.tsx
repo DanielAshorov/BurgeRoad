@@ -55,7 +55,10 @@ const ListBurgerResult = ({
         if (isNaN(a?.opening_hours?.open_now)) {
           return 1;
         }
-        return Number(b?.opening_hours?.open_now) - Number(a?.opening_hours?.open_now);
+        return (
+          Number(b?.opening_hours?.open_now) -
+          Number(a?.opening_hours?.open_now)
+        );
       });
     }
   }, [dataToDisplay]);
@@ -73,7 +76,11 @@ const ListBurgerResult = ({
       }}
     >
       {listOfBurger?.map((burger: any) => (
-        <Card key={burger.place_id} burger={burger} handleOnClick={handleOnClick} />
+        <Card
+          key={burger.place_id}
+          burger={burger}
+          handleOnClick={handleOnClick}
+        />
       ))}
       {dataToDisplay?.next_page_token && (
         <div
@@ -81,7 +88,10 @@ const ListBurgerResult = ({
           onClick={() => handleClickGetMoreResult()}
         >
           <Tooltip title={"Refresh"}>
-            <IconButton size={"large"} style={{ width: "100%", borderRadius: "initial" }}>
+            <IconButton
+              size={"large"}
+              style={{ width: "100%", borderRadius: "initial" }}
+            >
               <AddIcon />
             </IconButton>
           </Tooltip>
