@@ -1,78 +1,62 @@
 import { makeStyles } from "@mui/styles";
-export const useStyles = makeStyles((theme: any) => ({
-
-    flex: {
+//export const useStyles = makeStyles((theme: any) => ({
+    export const mainStyle = {
+        backgroundColor: "white",
+        padding: "0 20px",
+      };
+      
+      export const div1Style = {
         display: "flex",
-        flexDirection: "row",
-    },
-
-    _p_s_x_x_x_x_x: {
+        flexDirection: "column" as "column",
+        margin: "40px",
+      };
+      
+      export const div2Style = {
         display: "flex",
         justifyContent: "flex-end",
-    },
-    _P_E_E_EE_: {
+        alignItems: "center",
+      };
+      
+      export const buttonStyle = {
+        padding: "0.4rem 1.5rem",
+        backgroundColor: "#faca0b",
+        color: "white",
+        borderWidth: "0",
+        borderStyle: "solid",
+        borderRadius: "9999px",
+        fontSize: "1rem",
+        fontWeight: "600",
+      };
+      
+      export const cardWrapperStyle = {
         display: "flex",
-        justifyContent: "flex-start",
-        width: "100%",
-    },
-    column: {
+        flexDirection: "column" as "column",
+      };
+      
+      export const cardStyle = {
+        margin: "10px 0",
         display: "flex",
-        flexDirection: "column",
-    },
-
-    first_image: {
-        width: "200px",
+        columnGap: "3.5rem",
+      };
+      
+      export const imageWrapperStyle = { padding: "20px" };
+      
+      export const imageStyle = {
         height: "200px",
-        borderRadius: "50%",
-        boxShadow: "1.2px 71px 87px 0 #333"
-    },
-    _p_w_e_3_x_s: {
-        marginTop: "40px",
-        marginLeft: "6rem",
-
-    },
-
-    full_name: {
-        width: "400px",
-        height: "40px",
-        paddingLeft: "20px",
-        borderRadius: "7px",
-        outline: "none",
-        fontFamily: "Roboto, sans-serif",
-        fontSize: "30px",
-        marginLeft: "73px",
-        color: "#000",
-        fontWeight: "700",
-    },
-
-    otherexperience: {
-        width: "600px",
-        borderRadius: "7px",
-        marginLeft: "90px",
-        color: "#000",
-        marginTop: "0px",
-        padding: "4px",
-    },
-
-    robotoFont: {
-        fontFamily: "Roboto, sans-serif",
-        fontSize: "16px",
-        marginBottom: "10px",
-    },
-
-    a: {
-        color: "rgb(15, 156, 250)",
-    },
-
-    return_btn: {
-        padding: "10px 30px",
-        marginTop: "20px",
-        marginRight: "40px",
-        textTransform: "uppercase",
-        border: "none",
-        backgroundColor: "#414140!important",
-        /*fdca0b*/
-        color: "#fff",
-        borderRadius: "20px",
-    },
-}));
+        width: "200px",
+        borderRadius: "9999px",
+        boxShadow: "-4px -3px 45px 21px rgba(0,0,0,0.35)",
+      };
+      
+      export const cardTitleStyle = {
+        fontSize: "1.875rem",
+        lineHeight: "2.25rem",
+        fontWeight: "500",
+      };
+      
+      export const cardBoldParaStyle = {
+        fontWeight: "600",
+      };
+      
+      export const linkStyle = { color: "#66b9d4" };
+      
