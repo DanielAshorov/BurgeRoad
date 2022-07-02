@@ -1,120 +1,96 @@
 import React, { useEffect } from 'react'
-import './AboutUs.style.css';
 import FirstSoftwareimage from '../../assets/images/software_one.jpg';
 import FirstSoftwareTwoimage from '../../assets/images/two.jpg';
 import FirstSoftwareThreeimage from '../../assets/images/three.jpg';
 import FirstSoftwareFourimage from '../../assets/images/four.jpg';
 
 
-export default function AboutUs() {
-  useEffect(() => {
-    document.title = "About Us";
-  }, [])
-  return (
-    <div>
-      <section className='section_main'>
-        <div className='_p_s_x_x_x_x_x'>
-          <button className='return_btn'>Return To HomePage</button>
-        </div>
-        <div className="flex _p_w_e_3_x_s" id='_P_E_E_EE_'>
-          <div>
-            <img src={FirstSoftwareimage} alt="" className='first_image' />
-          </div>
-          <div className='flex column'>
-            <div>
-              <div className='full_name'> Ori Goldenberg</div>
-            </div>
-            <div>
-              <div className="other_experience">
-                <div className='flex column'>
-                  <div className='flex'>
-                    <b className='roboto-font _p_a_s'>Position: &nbsp;</b>
-                    <span className='roboto-font'> Support manager and FullStack</span>
-                  </div>
-                  <div className='flex'>
-                    <b className='roboto-font'>Contact Me: &nbsp;</b>
-                    <a href="https://www.linkedin.com/in/ori-goldenberg-0b3950192/overlay/contact-info/" className='roboto-font'>linkedin.com/in/ori-goldenberg-0b3950192</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex _p_w_e_3_x_s" id='_P_E_E_EE_'>
-          <div>
-            <img src={FirstSoftwareTwoimage} alt="" className='first_image' />
-          </div>
-          <div className='flex column'>
-            <div>
-              <div className='full_name'> Daniel Ashorov</div>
-            </div>
-            <div>
-              <div className="other_experience">
-                <div className='flex column'>
-                  <div className='flex'>
-                    <b className='roboto-font _p_a_s'>Position: &nbsp;</b>
-                    <span className='roboto-font'> Full Stack and Android developer</span>
-                  </div>
-                  <div className='flex'>
-                    <b className='roboto-font'>Contact Me: &nbsp;</b>
-                    <a href="https://www.linkedin.com/in/daniel-ashorov-354534221/overlay/contact-info/" className='roboto-font'>linkedin.com/in/daniel-ashorov-354534221</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex _p_w_e_3_x_s" id='_P_E_E_EE_'>
-          <div>
-            <img src={FirstSoftwareThreeimage} alt="" className='first_image' />
-          </div>
-          <div className='flex column'>
-            <div>
-              <div className='full_name'> Ohad Edry</div>
-            </div>
-            <div>
-              <div className="other_experience">
-                <div className='flex column'>
-                  <div className='flex'>
-                    <b className='roboto-font _p_a_s'>Position: &nbsp;</b>
-                    <span className='roboto-font'> QA Engineer and Fullstack developer</span>
-                  </div>
-                  <div className='flex'>
-                    <b className='roboto-font'>Contact Me: &nbsp;</b>
-                    <a href="https://www.linkedin.com/in/ohad-edry/overlay/contact-info/" className='roboto-font'>linkedin.com/in/ohad-edry</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+import {
+  buttonStyle,
+  cardBoldParaStyle,
+  cardStyle,
+  cardTitleStyle,
+  cardWrapperStyle,
+  div1Style,
+  div2Style,
+  imageStyle,
+  imageWrapperStyle,
+  linkStyle,
+  mainStyle,
+} from "./AboutUs.style";
 
-        <div className="flex _p_w_e_3_x_s" id='_P_E_E_EE_'>
-          <div>
-            <img src={FirstSoftwareFourimage} alt="" className='first_image' />
-          </div>
-          <div className='flex column'>
-            <div>
-              <div className='full_name'> Netanel Shimoni</div>
-            </div>
-            <div>
-              <div className="other_experience">
-                <div className='flex column'>
-                  <div className='flex'>
-                    <b className='roboto-font _p_a_s'>Position: &nbsp;</b>
-                    <span className='roboto-font'>Fullstack developer</span>
-                  </div>
-                  <div className='flex'>
-                    <b className='roboto-font'>Contact Me: &nbsp;</b>
-                    <a href="https://www.linkedin.com/in/ohad-edry/overlay/contact-info/" className='roboto-font'>linkedin.com/in/ohad-edry</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+const AboutUS = () => {
+  return (
+    <div style={mainStyle}>
+      <div style={div1Style}>
+        <div style={div2Style}>
+          <button style={buttonStyle}>Return to Homepage</button>
         </div>
-      </section>
+        <div style={cardWrapperStyle}>
+          <Card
+            name={"Ori Goldenberg"}
+            position={"Support manager and FullStack"}
+            linkedIn={"linkedin.com/in/ori-goldenberg-0b3950192"}
+            image={
+              "https://media-exp2.licdn.com/dms/image/C5603AQEbjO_I0rRCEQ/profile-displayphoto-shrink_800_800/0/1639328526832?e=1661990400&v=beta&t=NWp5MwNxMrQyLMbSvgMutFDz0bU7VHu97Uk7cwpjK2k"
+            }
+          />
+          <Card
+            name={"Daniel Ashorov"}
+            position={"Full Stack Developer and Creator"}
+            linkedIn={"linkedin.com/in/daniel-ashorov-354534221/"}
+            image={
+              "https://media-exp2.licdn.com/dms/image/C4D03AQHjws2jBhSaAg/profile-displayphoto-shrink_800_800/0/1632478462814?e=1661990400&v=beta&t=uXz_6XTaBKKi__KZAOOQ7URc3P2IVjpTT038GqxnH0s"
+            }
+          />
+          <Card
+            name={"Ohad Edry"}
+            position={"QA Engineer and Fullstack developer"}
+            linkedIn={"linkedin.com/in/ohad-edry/"}
+            image={
+              "https://media-exp2.licdn.com/dms/image/C4D03AQGOWX3c8IytZg/profile-displayphoto-shrink_800_800/0/1565092316078?e=1661990400&v=beta&t=JQMs0mI5vyq3jnlCAj6dViWZvayg5nAp4m0S7oocCV0"
+            }
+          />
+        </div>
+      </div>
     </div>
-  )
+  );
+};
+
+interface ICardProps {
+  name: string;
+  image: string;
+  position: string;
+  linkedIn: string;
 }
 
+const Card = ({ name, position, linkedIn, image }: ICardProps) => {
+  return (
+    <div style={cardStyle}>
+      <div style={imageWrapperStyle}>
+        <img style={imageStyle} src={image} alt="Ori Goldenberg" />
+      </div>
+      <div>
+        <h1 style={cardTitleStyle}>{name}</h1>
+        <p>
+          <span style={cardBoldParaStyle}>Position:</span>
+          &nbsp; &nbsp;{position}
+        </p>
+        <p>
+          <span style={cardBoldParaStyle}>Contact me:</span>
+          &nbsp; &nbsp;
+          <a
+            style={linkStyle}
+            href={`https://www.${linkedIn}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {linkedIn}
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default AboutUS;
