@@ -1,9 +1,17 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useStyles } from "./toolbar.style";
+import { Autocomplete } from "@react-google-maps/api";
 import {
   Combobox,
   ComboboxInput,
@@ -26,6 +34,7 @@ import {
   removeUserToLocalStorage,
 } from "../Login/UserManager";
 import ListFavorites from "../ListFavorites/ListFavorites";
+import e from "express";
 
 interface IToolBar {
   mapRef: any;
@@ -38,11 +47,15 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
   const [dataFromApi, setDataFromApi] = useState<any>();
   const user = getUserFromLocalStorage();
   const history = useHistory();
+  /**@type React.MutableRefObject<HTMLInputElement> **/
+  const inputRef = useRef();
+  // @ts-ignore
+  console.log("ref is", inputRef?.current?.value);
   const favorites = useContext(FavoritesContext).favorites;
+  const loadingContext = useContext(FavoritesContext).loadingContext;
   const ref = useOnclickOutside(() => {
     clearSuggestions();
   });
-
   const {
     ready,
     value,
@@ -83,6 +96,8 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
         await axios.get(API, { params: { lat, lng } }).then((res) => {
           if (res.data.status === "OK") {
             console.log("res.data", res.data.results[0].formatted_address);
+            // @ts-ignore
+            inputRef.current.value = res.data.results[0].formatted_address;
             setValue(res.data.results[0].formatted_address);
           }
         });
@@ -90,7 +105,6 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
       setIsLoading(false);
     }
 
-    console.log("defaultCenter", defaultCenter);
     return defaultCenter;
   };
 
@@ -98,6 +112,42 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
     mapRef?.current?.panTo({ lat, lng });
     mapRef?.current?.setZoom(15);
   }, []);
+
+  useEffect(() => {
+    // @ts-ignore
+    if (inputRef?.current?.value !== "") {
+      // @ts-ignore
+      setValue(inputRef?.current?.value as string);
+    } else {
+      setValue("");
+    }
+    // @ts-ignore
+  }, [inputRef?.current?.value]);
+
+  const handleOnClick = () => {
+    // @ts-ignore
+    const address = inputRef?.current?.value;
+    setValue(address ?? "");
+  };
+
+  const handleInput = async () => {
+    // @ts-ignore
+    if (inputRef.current !== undefined && (inputRef?.current.value as any)) {
+      // @ts-ignore
+      const address = inputRef.current.value;
+      const result = await getGeocode({ address });
+      setValue(address);
+      const { lat, lng } = getLatLng(result?.[0]);
+      panTo({ lat, lng });
+      await getBurgerResultFromServer({
+        mapRef,
+        setIsLoading,
+        setDateToDisplay,
+        token: undefined,
+        setDataFromApi,
+      });
+    }
+  };
 
   return (
     <div className={classes.header}>
@@ -107,9 +157,9 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
           position: "fixed",
           display: "flex",
           flex: "1",
-          margin: "5px 0 0 30px",
+          margin: "0.85vh 0 0 5.11vh",
           right: "8vw",
-          top: "12px",
+          top: "2.04vh",
         }}
       ></div>
 
@@ -122,52 +172,26 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
       </div>
 
       <div className={classes.header_search}>
-        <Combobox
-          onSelect={async (address) => {
-            try {
-              const result = await getGeocode({ address });
-              const { lat, lng } = getLatLng(result?.[0]);
-              panTo({ lat, lng });
-              setValue(address);
-              clearSuggestions();
-            } catch (err) {
-              console.warn("can't find address");
-            }
-          }}
-        >
-          <ComboboxInput
-            value={value}
-            className={classes.header_searchInput}
-            onChange={(e) => {
-              setValue(e.target.value);
+        <Autocomplete className={classes.header_combo}>
+          <input
+            style={{
+              width: "110vh",
+              textAlign: "center",
+              height: "2.00vh",
+              padding: "2.72vh",
+              marginLeft: "-50vh",
+              border: "none",
+              display: "flex",
+              flex: "1",
+              borderRadius: "1.7vh",
             }}
-            disabled={!ready}
-            placeholder={"Enter an address"}
+            ref={inputRef as any}
+            type={"text"}
+            onChange={(e) => setValue(e.target.value)}
+            onClick={handleOnClick}
           />
-          <ComboboxPopover>
-            {" "}
-            {status === "OK" &&
-              data.map(({ description }, id) => (
-                <ComboboxOption
-                  className={classes.comboboxOption}
-                  key={id}
-                  value={description}
-                />
-              ))}
-          </ComboboxPopover>
-        </Combobox>
-        <div
-          hidden={Boolean(!value)}
-          onClick={() =>
-            getBurgerResultFromServer({
-              mapRef,
-              setIsLoading,
-              setDateToDisplay,
-              token: undefined,
-              setDataFromApi,
-            })
-          }
-        >
+        </Autocomplete>
+        <div hidden={Boolean(!value)} onClick={handleInput}>
           <SearchIcon className={classes.header_searchIcon} />
         </div>
         <Tooltip title={"Find burgers in my area"}>
@@ -202,12 +226,16 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
         {user ? (
           <ListFavorites>
             <div className={classes.nav_itemStar}>
-              <StarBorderIcon
-                className={classes.nav_itemStar}
-                fontSize="medium"
-              />
+              {loadingContext[0] ? (
+                <CircularProgress size={20} />
+              ) : (
+                <StarBorderIcon
+                  className={classes.nav_itemStar}
+                  fontSize="medium"
+                />
+              )}
               <span className={classes.nav_itemLineTwo}>
-                {favorites.length}
+                {favorites?.length}
               </span>
             </div>
           </ListFavorites>

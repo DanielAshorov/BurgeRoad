@@ -20,6 +20,7 @@ const MapContainer = ({
 
   const mapStyles = {
     height: "92.5vh",
+    display: "relative",
     width: "100%",
   };
 

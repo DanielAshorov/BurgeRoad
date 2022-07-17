@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import {
   getUserFromLocalStorage,
   removeUserToLocalStorage,
+  setUserToLocalStorage,
 } from "./Login/UserManager";
 import { userSecurityByDate } from "./utils/utils";
 import Modal from "./Modal/Modal";
@@ -48,6 +49,7 @@ const AppView = ({
   );
   useEffect(() => {
     if (user && userSecurityByDate(new Date(user.date), 2)) {
+      setUserToLocalStorage(user?.email, user?.uid, new Date());
       history.push(`/user/${user.uid}`);
       setIsUserVerified(true);
     } else if (!user) {
@@ -56,14 +58,15 @@ const AppView = ({
       setIsUserVerified(false);
     }
   }, [user]);
-
   return (
     <>
       {isUserVerified === false && (
         <Modal
           isOpen={isUserVerified === false}
           title={"Oppppss...."}
-          subTitle={"You have not been active for more than two hours, so you are logged out of your account for security purposes."}
+          subTitle={
+            "You have not been active for more than two hours, so you are logged out of your account for security purposes."
+          }
           onClickConfirm={handleToClickConfirm}
         />
       )}

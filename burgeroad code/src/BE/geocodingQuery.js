@@ -19,7 +19,7 @@ app.get("/getAddressByCoordinate", (require, response) => {
   const lat = require.query.lat;
   const lng = require.query.lng;
   let x = encodeURI(
-    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBTEV1VfhX9gGqIXPWswa43WotvumwYATs`
+    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=EnterGoogleKey`
   );
   axios.get(x).then((res) => {
     response.setHeader("Access-Control-Allow-Origin", "*");
@@ -31,14 +31,14 @@ app.get("/getAddressByCoordinate", (require, response) => {
 });
 
 app.get("/getBurgerPoint", (require, response) => {
-  const burger = "המבורגר";
+  const burger = "Hamburger";
 
   let x = encodeURI(
-    `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${require.query.lat},${require.query.lng}&radius=1000&query=${burger}&sensor=true&key=AIzaSyBTEV1VfhX9gGqIXPWswa43WotvumwYATs`
+    `https://maps.googleapis.com/maps/api/place/textsearch/json?location=${require.query.lat},${require.query.lng}&radius=1000&query=${burger}&sensor=true&key=EnterGoogleKey`
   );
   if (require?.query?.token) {
     x = encodeURI(
-      `https://maps.googleapis.com/maps/api/place/textsearch/json?&pagetoken=${require.query.token}&location=${require.query?.lat},${require.query?.lng}&radius=1000&query=${burger}&sensor=true&key=AIzaSyBTEV1VfhX9gGqIXPWswa43WotvumwYATs`
+      `https://maps.googleapis.com/maps/api/place/textsearch/json?&pagetoken=${require.query.token}&location=${require.query?.lat},${require.query?.lng}&radius=1000&query=${burger}&sensor=true&key=EnterGoogleKey`
     );
   }
   axios.get(x).then((res) => {

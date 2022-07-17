@@ -2,7 +2,7 @@ import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles((theme: any) => ({
   header: {
-    height: "44px",
+    height: "7.5vh",
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme: any) => ({
     display: "flex",
     flex: "1",
     color: "#ff9f00",
-    margin: "0 15px",
+    margin: "0 2.55vh",
   },
 
   header_logoImage: {
@@ -27,7 +27,8 @@ export const useStyles = makeStyles((theme: any) => ({
 
   header_logoTitle: {
     display: "flex",
-    margin: "0 0 0 10px",
+    flex: "1",
+    margin: "0 0 0 1.7vh",
     textDecoration: "none",
     border: "0",
     color: "white",
@@ -36,16 +37,15 @@ export const useStyles = makeStyles((theme: any) => ({
   header_search: {
     display: "flex",
     flex: "1",
+    width: "34vh",
     alignItems: "center",
-    borderRadius: "24px",
-    margin: "0 20px",
+    margin: "0 3.4vh",
   },
-
   header_searchInput: {
     display: "flex",
     flex: "1",
-    height: "12px",
-    padding: "16px",
+    height: "2.04vh",
+    padding: "2.72vh",
     marginLeft: "-2vh",
     border: "none",
     minWidth: "120vh",
@@ -53,54 +53,54 @@ export const useStyles = makeStyles((theme: any) => ({
     backgroundColor: "lightgray",
   },
 
-  comboboxOption: {
-    direction: "rtl",
-    zIndex: "300",
-    padding: "1.5vh",
+  header_combo: {
+    display: "flex",
+    flex: "1",
   },
 
   header_searchIcon: {
-    top: "3px",
+    top: "0.34",
     position: "relative",
-    right: "22px",
-    minHeight: "31px ",
+    right: "3.74vh",
+    minHeight: "4.77vh ",
     backgroundColor: "#e4e2de",
     cursor: "pointer",
+    borderRadius: "10000px",
   },
 
   header_locationIcon: {
-    top: "3px",
+    top: "0.5vh",
     position: "relative",
-    left: "7px",
-    minHeight: "31px",
+    left: "1.2vh",
+    minHeight: "5.28vh",
     color: "#fff",
     cursor: "pointer",
   },
 
   header_nav: {
     display: "flex",
-    flex: "1",
     justifyContent: "space-evenly",
   },
 
   nav_item: {
     display: "flex",
+    flex: "1",
     flexDirection: "column",
-    marginLeft: "8px",
-    marginRight: "10px",
+    marginLeft: "1.36vh",
+    marginRight: "1.7vh",
     color: "white",
   },
 
   nav_itemLineOne: {
-    fontSize: "10px",
-    marginLeft: "4px",
+    fontSize: "1.7vh",
+    marginLeft: "0.68vh",
     cursor: "pointer",
   },
 
   nav_itemLineTwo: {
-    fontSize: "11px",
+    fontSize: "1.87vh",
     fontWeight: "800",
-    marginLeft: "5px",
+    marginLeft: "0.85vh",
     cursor: "pointer",
   },
 
@@ -114,14 +114,14 @@ export const useStyles = makeStyles((theme: any) => ({
   },
 
   nav_starCount: {
-    marginLeft: "10px",
-    marginRight: "3px",
+    marginLeft: "1.7vh",
+    marginRight: "0.51vh",
     cursor: "pointer",
   },
 
   nav_about: {
-    marginLeft: "14px",
-    marginRight: "18px",
+    marginLeft: "2.38vh",
+    marginRight: "3.06vh",
     color: "white",
     display: "flex",
     flexDirection: "column",

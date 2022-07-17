@@ -4,6 +4,7 @@ import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import { auth } from "../../BE/Firebase";
 import { useStyles } from "./Login.style";
 import { removeUserToLocalStorage, setUserToLocalStorage } from "./UserManager";
+import "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 
 const Login = () => {
@@ -96,6 +97,7 @@ const Login = () => {
 };
 
 export default Login;
+
 //
 // function removeUserToLocalStorage() {
 //   throw new Error("Function not implemented.");

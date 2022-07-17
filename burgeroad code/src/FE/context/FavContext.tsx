@@ -1,29 +1,22 @@
-import React, {
-  createContext,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 import { db } from "../../BE/Firebase";
 import { getUserFromLocalStorage } from "../Login/UserManager";
 import {
-  addDoc,
-  doc,
   collection,
   deleteDoc,
-  setDoc,
+  doc,
   onSnapshot,
   query,
+  setDoc,
   where,
 } from "firebase/firestore";
-import { useHistory } from "react-router-dom";
 
 export const FavoritesContext = createContext({
   favorites: [] as any[],
   favoritesIds: [] as string[],
-  onFavorite: (e: any, burger: any) => { },
-  onUnFavorite: (e: any, place_id: string) => { },
+  loadingContext: [] as boolean[],
+  onFavorite: (e: any, burger: any) => {},
+  onUnFavorite: (e: any, place_id: string) => {},
 });
 
 interface propTypes {
@@ -33,16 +26,17 @@ interface propTypes {
 export const FavoritesContextProvider = (props: propTypes) => {
   const [favorites, setFavorites] = useState<any[]>([]);
   const [favoritesIds, setFavoritesId] = useState<string[]>([]);
+  const [loadingContext, setLoadingContext] = useState<any[]>([true]);
   const user = getUserFromLocalStorage();
   const [userLogin, setUserLogin] = useState<any>(user);
 
   useEffect(() => {
-    let unsubscribe = () => { };
-    console.log("userLogin", userLogin);
+    let unsubscribe = () => {};
     if (!user) {
       if (favorites.length > 0) {
         setFavorites([]);
         setFavoritesId([]);
+        setLoadingContext([false]);
       }
       return unsubscribe();
     }
@@ -60,6 +54,7 @@ export const FavoritesContextProvider = (props: propTypes) => {
       });
       setFavorites(favorites);
       setFavoritesId(favoritesIds);
+      setLoadingContext([false]);
     });
     return () => unsubscribe();
 
@@ -85,7 +80,13 @@ export const FavoritesContextProvider = (props: propTypes) => {
   };
   return (
     <FavoritesContext.Provider
-      value={{ favorites, favoritesIds, onFavorite, onUnFavorite }}
+      value={{
+        loadingContext,
+        favorites,
+        favoritesIds,
+        onFavorite,
+        onUnFavorite,
+      }}
     >
       {props.children}
     </FavoritesContext.Provider>

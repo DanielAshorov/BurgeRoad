@@ -1,0 +1,47 @@
+#FROM mhart/alpine-node:12 AS builder
+#
+#COPY ["package.json", "./"]
+#
+## TODO copy only relevant packages
+#COPY [".","./"]
+#
+#USER root
+#
+#RUN npm i
+#
+#RUN npm run build
+#
+#FROM nginx-unprivileged:latest AS prod-stage
+#
+#COPY --from=build /dist /usr/share/html
+#
+#COPY /nginx.conf /etc/nginx/conf.d/default.conf
+#
+#EXPOSE 3000
+#
+#
+#
+#CMD nginx -g 'daemon off;'
+#
+#
+#
+#
+## syntax=docker/dockerfile:1
+##FROM busybox
+##CMD echo "Hello world! This is my first Docker image."
+
+FROM node:16.14-alpine
+
+COPY ["package.json", "./"]
+
+# TODO copy only relevant packages
+COPY [".","./"]
+
+USER root
+
+RUN npm i
+
+
+EXPOSE 4000
+
+CMD [ "npm", "run", "start-BE" ]

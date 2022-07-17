@@ -1,10 +1,3 @@
-import React, { useEffect } from 'react'
-import FirstSoftwareimage from '../../assets/images/software_one.jpg';
-import FirstSoftwareTwoimage from '../../assets/images/two.jpg';
-import FirstSoftwareThreeimage from '../../assets/images/three.jpg';
-import FirstSoftwareFourimage from '../../assets/images/four.jpg';
-
-
 import {
   buttonStyle,
   cardBoldParaStyle,
@@ -16,15 +9,32 @@ import {
   imageStyle,
   imageWrapperStyle,
   linkStyle,
-  mainStyle,
+  aboutStyle,
 } from "./AboutUs.style";
+import { useHistory } from "react-router-dom";
+import { getUserFromLocalStorage } from "../Login/UserManager";
 
 const AboutUS = () => {
+  const history = useHistory();
+  const user = getUserFromLocalStorage();
+  const handleClickReturnHomePage = () => {
+    if (user) {
+      history.push(`user/${user.id}`);
+    } else {
+      history.push(`/`);
+    }
+  };
+
   return (
-    <div style={mainStyle}>
+    <div style={aboutStyle}>
       <div style={div1Style}>
         <div style={div2Style}>
-          <button style={buttonStyle}>Return to Homepage</button>
+          <button
+            style={buttonStyle}
+            onClick={() => handleClickReturnHomePage()}
+          >
+            Return to Homepage
+          </button>
         </div>
         <div style={cardWrapperStyle}>
           <Card
@@ -37,7 +47,7 @@ const AboutUS = () => {
           />
           <Card
             name={"Daniel Ashorov"}
-            position={"Full Stack Developer and Creator"}
+            position={"Full Stack and Android Developer"}
             linkedIn={"linkedin.com/in/daniel-ashorov-354534221/"}
             image={
               "https://media-exp2.licdn.com/dms/image/C4D03AQHjws2jBhSaAg/profile-displayphoto-shrink_800_800/0/1632478462814?e=1661990400&v=beta&t=uXz_6XTaBKKi__KZAOOQ7URc3P2IVjpTT038GqxnH0s"
@@ -50,6 +60,12 @@ const AboutUS = () => {
             image={
               "https://media-exp2.licdn.com/dms/image/C4D03AQGOWX3c8IytZg/profile-displayphoto-shrink_800_800/0/1565092316078?e=1661990400&v=beta&t=JQMs0mI5vyq3jnlCAj6dViWZvayg5nAp4m0S7oocCV0"
             }
+          />
+          <Card
+            name={"Netanel Shimoni"}
+            position={"Fullstack developer"}
+            linkedIn={"linkedin.com/in/netanel-shimoni-1790331a8/"}
+            image={"https://avatars.githubusercontent.com/u/57719538?v=4"}
           />
         </div>
       </div>

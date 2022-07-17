@@ -4,6 +4,11 @@ function setUserToLocalStorage(email: string, uid: string, date: Date) {
   const user = { email, uid, date };
   localStorage.setItem(loggedInUserKey, JSON.stringify(user));
 }
+export interface IUser {
+  email?: string;
+  uid?: string;
+  Date?: Date;
+}
 
 function removeUserToLocalStorage() {
   localStorage.removeItem(loggedInUserKey);
