@@ -1,15 +1,27 @@
 import { Tooltip } from "@mui/material";
-import React, { useContext, useEffect } from "react";
-import { Cabin } from "@mui/icons-material";
-import Card from "../Card/Card";
+import React, { useContext } from "react";
 import { FavoritesContext } from "../context/FavContext";
 import Favorite from "./Favorite";
 import { useStyles } from "./listFavorites.style";
 
 interface IListFavorites {
   children: any;
+  mapRef: any;
+  distance?: any;
+  setDistance?: Function;
+  duration?: any;
+  setDuration?: Function;
+  getMyLocation?: Function;
 }
-const ListFavorites = ({ children }: IListFavorites) => {
+const ListFavorites = ({
+  children,
+  mapRef,
+  setDuration,
+  duration,
+  setDistance,
+  distance,
+  getMyLocation,
+}: IListFavorites) => {
   const favorites = useContext(FavoritesContext);
   const classes = useStyles();
   return (
@@ -31,7 +43,15 @@ const ListFavorites = ({ children }: IListFavorites) => {
         }}
         title={favorites?.favorites.map((favor) => (
           <div style={{ maxHeight: "97.5vh" }}>
-            <Favorite favor={favor} />
+            <Favorite
+              favor={favor}
+              mapRef={mapRef}
+              distance={distance}
+              setDistance={setDistance}
+              duration={duration}
+              setDuration={setDuration}
+              getMyLocation={getMyLocation}
+            />
           </div>
         ))}
         arrow={true}

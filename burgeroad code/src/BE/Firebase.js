@@ -3,7 +3,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const firebaseConfig = {
-  apiKey: "EnterFirebaseKey",
+  apiKey: "AIzaSyDqX4nkU2OTO3d8wmYxSkFNWLnrcaV4qiM",
   authDomain: "borgeroad2.firebaseapp.com",
   projectId: "borgeroad2",
   storageBucket: "borgeroad2.appspot.com",

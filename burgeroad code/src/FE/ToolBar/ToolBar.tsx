@@ -40,9 +40,21 @@ interface IToolBar {
   mapRef: any;
   setIsLoading: Function;
   setDateToDisplay: Function;
+  distance?: any;
+  setDistance?: Function;
+  duration?: any;
+  setDuration?: Function;
 }
 
-const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
+const ToolBar = ({
+  mapRef,
+  setDateToDisplay,
+  setIsLoading,
+  duration,
+  setDuration,
+  setDistance,
+  distance,
+}: IToolBar) => {
   const classes = useStyles();
   const [dataFromApi, setDataFromApi] = useState<any>();
   const user = getUserFromLocalStorage();
@@ -50,9 +62,9 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
   /**@type React.MutableRefObject<HTMLInputElement> **/
   const inputRef = useRef();
   // @ts-ignore
-  console.log("ref is", inputRef?.current?.value);
   const favorites = useContext(FavoritesContext).favorites;
   const loadingContext = useContext(FavoritesContext).loadingContext;
+  const [defaultCenter, setDefaultCenter] = useState<any>();
   const ref = useOnclickOutside(() => {
     clearSuggestions();
   });
@@ -80,15 +92,17 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
 
   const getMyLocation = async () => {
     setIsLoading(true);
-    let defaultCenter;
+    let currentDefaultCenter;
     if (navigator?.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
-        defaultCenter = {
+        currentDefaultCenter = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-        const lat = defaultCenter.lat;
-        const lng = defaultCenter.lng;
+        setDefaultCenter(currentDefaultCenter);
+
+        const lat = currentDefaultCenter.lat;
+        const lng = currentDefaultCenter.lng;
         mapRef?.current?.panTo({ lat, lng });
         mapRef?.current?.setZoom(12);
 
@@ -102,6 +116,7 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
           }
         });
       });
+
       setIsLoading(false);
     }
 
@@ -224,7 +239,14 @@ const ToolBar = ({ mapRef, setDateToDisplay, setIsLoading }: IToolBar) => {
         </div>
         {/*TODO refactor this*/}
         {user ? (
-          <ListFavorites>
+          <ListFavorites
+            mapRef={mapRef}
+            distance={distance}
+            setDistance={setDistance}
+            duration={duration}
+            setDuration={setDuration}
+            getMyLocation={getMyLocation}
+          >
             <div className={classes.nav_itemStar}>
               {loadingContext[0] ? (
                 <CircularProgress size={20} />

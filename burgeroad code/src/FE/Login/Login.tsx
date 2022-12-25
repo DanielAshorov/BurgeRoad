@@ -6,11 +6,14 @@ import { useStyles } from "./Login.style";
 import { removeUserToLocalStorage, setUserToLocalStorage } from "./UserManager";
 import "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
+import Modal from "../Modal/Modal";
 
 const Login = () => {
   const classes = useStyles();
   const history = useHistory();
   const [email, setEmail] = useState("");
+  const [isOpenPopUpLogin, setIsOpenPopUpLogin] = useState<boolean>(false);
+  const [isOpenPopUpSignIn, setIsOpenPopUpSignIn] = useState<boolean>(false);
   const [password, setPassword] = useState("");
 
   onAuthStateChanged(auth, async (user) => {
@@ -31,7 +34,7 @@ const Login = () => {
       .then((auth: any) => {
         window.location = `/user/${auth?.user?._delegate?.uid}` as any;
       })
-      .catch((error: any) => alert(error.message));
+      .catch(() => setIsOpenPopUpLogin(true));
   };
 
   const register = (e: any) => {
@@ -44,7 +47,7 @@ const Login = () => {
           window.location = `/user/${auth?.user?._delegate?.uid}` as any;
         }
       })
-      .catch((error: any) => alert(error.message));
+      .catch(() => setIsOpenPopUpSignIn(true));
   };
 
   return (
@@ -61,6 +64,14 @@ const Login = () => {
 
       <div className={classes.login__container}>
         <h1 style={{ cursor: "pointer" }}>Sign-in</h1>{" "}
+        {isOpenPopUpSignIn && (
+          <Modal
+            title={"Oppss 😕 😕 😕 😕"}
+            subTitle={"Email or password is not valid"}
+            onClickConfirm={() => setIsOpenPopUpSignIn(false)}
+            isOpen={isOpenPopUpSignIn}
+          />
+        )}
         <form>
           <h5>E-mail</h5>
           <input
@@ -83,6 +94,14 @@ const Login = () => {
           >
             Sign In
           </button>
+          {isOpenPopUpLogin && (
+            <Modal
+              title={"Oppss 😕 😕 😕 😕"}
+              subTitle={"Email or password is incorrect"}
+              onClickConfirm={() => setIsOpenPopUpLogin(false)}
+              isOpen={isOpenPopUpLogin}
+            />
+          )}
         </form>
         <p>
           By signing-in you agree to our Website Conditions of Use & Sale.
@@ -97,8 +116,3 @@ const Login = () => {
 };
 
 export default Login;
-
-//
-// function removeUserToLocalStorage() {
-//   throw new Error("Function not implemented.");
-// }

@@ -1,11 +1,20 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  InfoWindow,
+  Marker,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
 
 interface IMapContainer {
   mapRef: any;
   dataToDisplay: any;
   activeMarker: any;
   setActiveMarker: Function;
+  distance?: any;
+  setDistance?: Function;
+  duration?: any;
+  setDuration?: Function;
 }
 
 const MapContainer = ({
@@ -13,6 +22,10 @@ const MapContainer = ({
   dataToDisplay,
   setActiveMarker,
   activeMarker,
+  duration,
+  setDuration,
+  setDistance,
+  distance,
 }: IMapContainer) => {
   const onMapLoad = useCallback((map: any) => {
     mapRef.current = map;
@@ -20,7 +33,6 @@ const MapContainer = ({
 
   const mapStyles = {
     height: "92.5vh",
-    display: "relative",
     width: "100%",
   };
 
@@ -181,6 +193,7 @@ const MapContainer = ({
               </Marker>
             );
           })}
+        {distance && <DirectionsRenderer directions={distance} />}
       </GoogleMap>
     </>
   );

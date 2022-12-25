@@ -32,6 +32,8 @@ const AppView = ({
   const classes = useStyles();
   const history = useHistory();
   const user = getUserFromLocalStorage();
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("");
   const [isUserVerified, setIsUserVerified] = useState<boolean | undefined>(
     undefined
   );
@@ -71,12 +73,20 @@ const AppView = ({
         />
       )}
       <ToolBar
+        distance={distance}
+        setDistance={setDistance}
+        duration={duration}
+        setDuration={setDuration}
         mapRef={mapRef}
         setDateToDisplay={setDataToDisplay}
         setIsLoading={setIsLoading}
       />
       <div className={dataToDisplay ? classes.grid : classes.withOutListResult}>
         <MapContainer
+          distance={distance}
+          setDistance={setDistance}
+          duration={duration}
+          setDuration={setDuration}
           mapRef={mapRef}
           dataToDisplay={dataToDisplay}
           setActiveMarker={setActiveMarker}

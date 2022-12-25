@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useStyles } from "./Card.style";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { IconButton, Tooltip } from "@mui/material";
@@ -7,18 +7,57 @@ import Grow from "@mui/material/Grow";
 import StarIcon from "@mui/icons-material/Star";
 import { FavoritesContext } from "../context/FavContext";
 import { getUserFromLocalStorage } from "../Login/UserManager";
+import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
+import axios from "axios";
 
 interface ICard {
   burger: any;
   handleOnClick: Function;
   isListFavorites?: boolean;
+  map?: any;
+  distance?: any;
+  setDistance?: Function;
+  duration?: any;
+  setDuration?: Function;
+  getMyLocation?: Function;
 }
 
-const Card = ({ burger, handleOnClick, isListFavorites }: ICard) => {
+const Card = ({
+  burger,
+  handleOnClick,
+  isListFavorites,
+  map,
+  setDuration,
+  duration,
+  setDistance,
+  distance,
+  getMyLocation,
+}: ICard) => {
   const { favoritesIds, onFavorite, onUnFavorite } =
     useContext(FavoritesContext);
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const user = getUserFromLocalStorage();
+  const options = ["Navigate to the burger"];
+  const calcRoute = async () => {
+    const x = new google.maps.DirectionsService();
+    // @ts-ignore
+    const myCurrentLocation = getMyLocation();
+    Promise.all([myCurrentLocation]).then(async (data) => {
+      const result = await x.route({
+        travelMode: google.maps.TravelMode.DRIVING,
+        origin: new google.maps.LatLng(data?.[0]?.lat, data?.[0]?.lng),
+        destination: new google.maps.LatLng(
+          burger?.geometry?.location?.lat,
+          burger?.geometry?.location?.lng
+        ),
+      });
+      // @ts-ignore
+      setDistance(result ?? "");
+      // @ts-ignore
+      setDuration(result.routes[0]?.legs[0]?.duration?.text ?? "");
+    });
+  };
 
   return (
     <Grow in={Boolean(burger)} timeout={2500}>
@@ -123,6 +162,21 @@ const Card = ({ burger, handleOnClick, isListFavorites }: ICard) => {
                       : classes.redColorClock
                   }
                 ></AlarmIcon>
+              </IconButton>
+            </div>
+          )}
+          {isListFavorites && (
+            <div
+              style={{
+                marginLeft: "-5.5vh",
+                marginTop: "-0.5vh",
+                display: "flex",
+                flex: "1",
+                justifyContent: "end",
+              }}
+            >
+              <IconButton onClick={() => calcRoute()}>
+                <AssistantDirectionIcon />
               </IconButton>
             </div>
           )}

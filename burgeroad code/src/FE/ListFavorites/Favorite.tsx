@@ -1,19 +1,37 @@
-import { Tooltip } from "@mui/material";
-import React, { useContext } from "react";
-import { FavoritesContext } from "../context/FavContext";
+import React from "react";
 import Card from "../Card/Card";
 
 interface IFavorite {
   favor: any;
+  mapRef: any;
+  distance?: any;
+  setDistance?: Function;
+  duration?: any;
+  setDuration?: Function;
+  getMyLocation?: Function;
 }
-const Favorite = ({ favor }: IFavorite) => {
+const Favorite = ({
+  favor,
+  mapRef,
+  setDuration,
+  duration,
+  setDistance,
+  distance,
+  getMyLocation,
+}: IFavorite) => {
   return (
     <>
       <div style={{ backgroundColor: "white" }}>
         <Card
+          map={mapRef}
           burger={favor}
-          handleOnClick={() => alert("List")}
+          handleOnClick={() => null}
           isListFavorites={true}
+          distance={distance}
+          setDistance={setDistance}
+          duration={duration}
+          setDuration={setDuration}
+          getMyLocation={getMyLocation}
         />
       </div>
     </>
